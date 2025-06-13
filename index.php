@@ -30,6 +30,12 @@ if ($ruta === '' || $ruta === 'dashboard') {
 switch ($ruta) {
         
     // Rutas de pedidos - verificar permisos según el rol
+    case 'pedidos/listar':
+        requiereRol(1);
+        require_once 'controllers/PedidoController.php';
+        $controller = new PedidoController();
+        $controller->listar();
+        break;
     case 'pedidos/registrar':
         requiereAutenticacion();
         require_once 'views/pedidos/registrar_pedido.php';
@@ -52,6 +58,12 @@ switch ($ruta) {
         break;
         
     // Rutas de transportistas
+    case 'transportistas/listar':
+        requiereRol(1);
+        require_once 'controllers/TransportistaController.php';
+        $controller = new TransportistaController();
+        $controller->listar();
+        break;
     case 'transportistas/gestionar':
         requiereRol(1); // Solo administrador
         require_once 'views/transportistas/gestionar_transportistas.php';
@@ -68,8 +80,22 @@ switch ($ruta) {
         $controller = new ClienteController();
         $controller->listar();
         break;
+
+    // Rutas de productos
+    case 'productos/listar':
+        requiereRol(1);
+        require_once 'controllers/ProductoController.php';
+        $controller = new ProductoController();
+        $controller->listar();
+        break;
         
     // Rutas de reportes
+    case 'reportes/index':
+        requiereRol(1);
+        require_once 'controllers/ReporteController.php';
+        $controller = new ReporteController();
+        $controller->index();
+        break;
     case 'reportes/consultar':
         requiereRol(1); // Solo administrador
         require_once 'views/reportes/consultar_reportes.php';
@@ -84,15 +110,21 @@ switch ($ruta) {
     // Rutas de dashboard según el rol
     case 'dashboard/admin':
         requiereRol(1); // Solo administrador
-        require_once 'views/dashboard/admin.php';
+        require_once 'controllers/DashboardController.php';
+        $controller = new DashboardController();
+        $controller->admin();
         break;
     case 'dashboard/cliente':
         requiereRol(2); // Solo cliente
-        require_once 'views/dashboard/cliente.php';
+        require_once 'controllers/DashboardController.php';
+        $controller = new DashboardController();
+        $controller->cliente();
         break;
     case 'dashboard/transportista':
         requiereRol(3); // Solo transportista
-        require_once 'views/dashboard/transportista.php';
+        require_once 'controllers/DashboardController.php';
+        $controller = new DashboardController();
+        $controller->transportista();
         break;
         
     // Ruta por defecto (404)

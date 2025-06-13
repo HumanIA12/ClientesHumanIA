@@ -1,40 +1,3 @@
-<?php
-// Iniciar sesión
-session_start();
-
-// Incluir utilidades de autenticación
-require_once '../../api/auth/auth_utils.php';
-
-// Verificar que el usuario tiene rol de administrador
-requiereRol(1);
-
-// Incluir la conexión a la base de datos
-$conexion = require_once '../../config/db.php';
-
-// Consultas para el dashboard
-// 1. Total de pedidos
-$query_pedidos = "SELECT COUNT(*) as total FROM pedidos";
-$resultado_pedidos = $conexion->query($query_pedidos);
-$total_pedidos = $resultado_pedidos->fetch_assoc()['total'];
-
-// 2. Total de clientes
-$query_clientes = "SELECT COUNT(*) as total FROM clientes";
-$resultado_clientes = $conexion->query($query_clientes);
-$total_clientes = $resultado_clientes->fetch_assoc()['total'];
-
-// 3. Total de transportistas
-$query_transportistas = "SELECT COUNT(*) as total FROM transportistas";
-$resultado_transportistas = $conexion->query($query_transportistas);
-$total_transportistas = $resultado_transportistas->fetch_assoc()['total'];
-
-// 4. Pedidos por estado
-$query_estados = "SELECT estado, COUNT(*) as total FROM pedidos GROUP BY estado";
-$resultado_estados = $conexion->query($query_estados);
-$pedidos_por_estado = [];
-while ($row = $resultado_estados->fetch_assoc()) {
-    $pedidos_por_estado[$row['estado']] = $row['total'];
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,11 +19,11 @@ while ($row = $resultado_estados->fetch_assoc()) {
                 <h5 class="px-3 mb-4">Panel de Administración</h5>
                 <div class="nav flex-column">
                     <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                    <a class="nav-link" href="../pedidos/listar.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+                    <a class="nav-link" href="../../index.php?ruta=pedidos/listar"><i class="fas fa-shopping-cart"></i> Pedidos</a>
                     <a class="nav-link" href="../../index.php?ruta=clientes/listar"><i class="fas fa-users"></i> Clientes</a>
-                    <a class="nav-link" href="../transportistas/listar.php"><i class="fas fa-truck"></i> Transportistas</a>
-                    <a class="nav-link" href="../productos/listar.php"><i class="fas fa-box"></i> Productos</a>
-                    <a class="nav-link" href="../reportes/index.php"><i class="fas fa-chart-bar"></i> Reportes</a>
+                    <a class="nav-link" href="../../index.php?ruta=transportistas/listar"><i class="fas fa-truck"></i> Transportistas</a>
+                    <a class="nav-link" href="../../index.php?ruta=productos/listar"><i class="fas fa-box"></i> Productos</a>
+                    <a class="nav-link" href="../../index.php?ruta=reportes/index"><i class="fas fa-chart-bar"></i> Reportes</a>
                     <a class="nav-link" href="../usuarios/listar.php"><i class="fas fa-user-cog"></i> Usuarios</a>
                     <a class="nav-link" href="../../api/auth/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                 </div>
@@ -108,11 +71,7 @@ while ($row = $resultado_estados->fetch_assoc()) {
                                 <i class="fas fa-thermometer-half"></i>
                             </div>
                             <div class="card-title">Requieren Refrigeración</div>
-                            <div class="card-value"><?php 
-                                $query_refrigeracion = "SELECT COUNT(*) as total FROM pedidos WHERE refrigeracion_requerida = TRUE";
-                                $result_refrigeracion = $conexion->query($query_refrigeracion);
-                                echo $result_refrigeracion->fetch_assoc()['total']; 
-                            ?></div>
+                            <div class="card-value"><?php echo $requieren_refrigeracion; ?></div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +82,7 @@ while ($row = $resultado_estados->fetch_assoc()) {
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Pedidos Recientes</h5>
-                                <a href="../pedidos/listar.php" class="btn btn-sm btn-verde">Ver todos</a>
+                                <a href="../../index.php?ruta=pedidos/listar" class="btn btn-sm btn-verde">Ver todos</a>
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped">
@@ -138,19 +97,8 @@ while ($row = $resultado_estados->fetch_assoc()) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query_recientes = "
-                                            SELECT p.id, CONCAT(u.nombre, ' ', u.apellidos) as cliente, 
-                                                   p.fecha_pedido, p.total, p.estado
-                                            FROM pedidos p
-                                            JOIN clientes c ON p.id_cliente = c.id
-                                            JOIN usuarios u ON c.id_usuario = u.id
-                                            ORDER BY p.fecha_pedido DESC
-                                            LIMIT 5
-                                        ";
-                                        $resultado_recientes = $conexion->query($query_recientes);
-                                        
-                                        if ($resultado_recientes->num_rows > 0) {
-                                            while ($pedido = $resultado_recientes->fetch_assoc()) {
+                                        if ($pedidos_recientes->num_rows > 0) {
+                                            while ($pedido = $pedidos_recientes->fetch_assoc()) {
                                                 echo '<tr>';
                                                 echo '<td>' . $pedido['id'] . '</td>';
                                                 echo '<td>' . htmlspecialchars($pedido['cliente']) . '</td>';
