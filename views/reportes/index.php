@@ -189,7 +189,7 @@ $ventas_ciudades_json = json_encode($ventas_ciudades);
                 <div class="nav flex-column">
                     <a class="nav-link" href="../dashboard/admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                     <a class="nav-link" href="../pedidos/listar.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-                    <a class="nav-link" href="../clientes/listar.php"><i class="fas fa-users"></i> Clientes</a>
+                    <a class="nav-link" href="../../index.php?ruta=clientes/listar"><i class="fas fa-users"></i> Clientes</a>
                     <a class="nav-link" href="../transportistas/listar.php"><i class="fas fa-truck"></i> Transportistas</a>
                     <a class="nav-link" href="../productos/listar.php"><i class="fas fa-box"></i> Productos</a>
                     <a class="nav-link active" href="#"><i class="fas fa-chart-bar"></i> Reportes</a>

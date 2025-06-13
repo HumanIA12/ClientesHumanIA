@@ -62,13 +62,11 @@ switch ($ruta) {
         break;
         
     // Rutas de clientes
-    case 'clientes/consultar':
+    case 'clientes/listar':
         requiereRol(1); // Solo administrador
-        require_once 'views/clientes/consultar_clientes.php';
-        break;
-    case 'clientes/registrar':
-        requiereRol(1); // Solo administrador
-        require_once 'views/clientes/registrar_cliente.php';
+        require_once 'controllers/ClienteController.php';
+        $controller = new ClienteController();
+        $controller->listar();
         break;
         
     // Rutas de reportes
