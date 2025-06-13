@@ -1,0 +1,437 @@
+/* Estilos generales */
+:root {
+    /* Colores naturales Frutale */
+    --verde-oscuro: #529134;
+    --verde-claro: #78cc52;
+    --naranja-claro: #ed9932;
+    --naranja-oscuro: #ad6a18;
+    
+    /* Colores base */
+    --primary-color: var(--verde-claro);
+    --secondary-color: var(--naranja-claro);
+    --dark-green: var(--verde-oscuro);
+    --light-green: #e8f5e9;
+    --warning-color: #f0ad4e;
+    --danger-color: #d9534f;
+    --success-color: var(--verde-claro);
+    --gray-light: #f8f9fa;
+    --gray-dark: #343a40;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Estilos para Login */
+.login-box {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+}
+
+.logo-img {
+    max-height: 120px;
+    margin-bottom: 20px;
+}
+
+/* Líneas divisoras */
+.green-divider {
+    background-color: var(--verde-claro);
+    height: 5px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Elementos de texto */
+.text-verde-oscuro {
+    color: var(--verde-oscuro) !important;
+}
+
+.text-verde-claro {
+    color: var(--verde-claro) !important;
+}
+
+.text-naranja-claro {
+    color: var(--naranja-claro) !important;
+}
+
+.text-naranja-oscuro {
+    color: var(--naranja-oscuro) !important;
+}
+
+/* Botones personalizados */
+/* Botón naranja */
+.btn-naranja {
+    background-color: var(--naranja-claro);
+    border-color: var(--naranja-oscuro);
+    color: white;
+}
+
+.btn-naranja:hover {
+    background-color: var(--naranja-oscuro);
+    border-color: var(--naranja-oscuro);
+    color: white;
+}
+
+/* Botón verde */
+.btn-verde {
+    background-color: var(--verde-claro);
+    border-color: var(--verde-oscuro);
+    color: white;
+}
+
+.btn-verde:hover {
+    background-color: var(--verde-oscuro);
+    border-color: var(--verde-oscuro);
+    color: white;
+}
+
+/* Sobreescribir botones Bootstrap */
+.btn-primary {
+    background-color: var(--verde-claro) !important;
+    border-color: var(--verde-oscuro) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--verde-oscuro) !important;
+    border-color: var(--verde-oscuro) !important;
+}
+
+.btn-secondary {
+    background-color: var(--naranja-claro) !important;
+    border-color: var(--naranja-oscuro) !important;
+}
+
+.btn-secondary:hover {
+    background-color: var(--naranja-oscuro) !important;
+    border-color: var(--naranja-oscuro) !important;
+}
+
+.btn-success {
+    background-color: var(--verde-claro) !important;
+    border-color: var(--verde-oscuro) !important;
+}
+
+.btn-success:hover {
+    background-color: var(--verde-oscuro) !important;
+    border-color: var(--verde-oscuro) !important;
+}
+
+.btn-warning {
+    background-color: var(--naranja-claro) !important;
+    border-color: var(--naranja-oscuro) !important;
+    color: white !important;
+}
+
+.btn-warning:hover {
+    background-color: var(--naranja-oscuro) !important;
+    border-color: var(--naranja-oscuro) !important;
+    color: white !important;
+}
+
+.btn-outline-primary {
+    border-color: var(--verde-claro) !important;
+    color: var(--verde-oscuro) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--verde-claro) !important;
+    border-color: var(--verde-oscuro) !important;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--naranja-claro) !important;
+    color: var(--naranja-oscuro) !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--naranja-claro) !important;
+    border-color: var(--naranja-oscuro) !important;
+    color: white !important;
+}
+
+/* Colores funcionales para acciones específicas */
+.btn-danger {
+    background-color: #dc3545 !important; /* Rojo para eliminar/acciones peligrosas */
+    border-color: #bd2130 !important;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130 !important;
+    border-color: #bd2130 !important;
+}
+
+.btn-info {
+    background-color: #17a2b8 !important; /* Celeste para información/ver detalles */
+    border-color: #138496 !important;
+    color: white !important;
+}
+
+.btn-info:hover {
+    background-color: #138496 !important;
+    border-color: #117a8b !important;
+}
+
+/* Clase para acciones de editar */
+.btn-editar {
+    background-color: var(--verde-claro);
+    border-color: var(--verde-oscuro);
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: var(--verde-oscuro);
+    border-color: var(--verde-oscuro);
+    color: white;
+}
+
+/* Clase para acciones de ver */
+.btn-ver {
+    background-color: #17a2b8;
+    border-color: #138496;
+    color: white;
+}
+
+.btn-ver:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+    color: white;
+}
+
+/* Clase para acciones de eliminar */
+.btn-eliminar {
+    background-color: #dc3545;
+    border-color: #bd2130;
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background-color: #bd2130;
+    border-color: #bd2130;
+    color: white;
+}
+
+/* Botones y elementos de acción */
+.btn-primary-custom {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.btn-primary-custom:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+.btn-secondary-custom {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #e06a35;
+    border-color: #e06a35;
+}
+
+/* Tarjetas y contenedores */
+.card-dashboard {
+    transition: all 0.3s;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.card-dashboard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header-custom {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+/* Tablas */
+.table-custom {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table-custom thead th {
+    background-color: var(--dark-green);
+    color: white;
+    border: none;
+}
+
+.table-custom tbody tr:nth-child(even) {
+    background-color: var(--light-green);
+}
+
+/* Estados de pedidos */
+.estado-pendiente {
+    background-color: #ffeeba;
+    color: #856404;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-preparando {
+    background-color: #b8daff;
+    color: #004085;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-en-camino {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-entregado {
+    background-color: #c3e6cb;
+    color: #155724;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-cancelado {
+    background-color: #f5c6cb;
+    color: #721c24;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Iconos y badges */
+.icon-large {
+    font-size: 3rem;
+    opacity: 0.8;
+}
+
+.badge-custom {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* Formularios */
+.form-control-custom {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+}
+
+.form-control-custom:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(126, 217, 87, 0.25);
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .login-box {
+        padding: 20px !important;
+    }
+    
+    .card-dashboard {
+        margin-bottom: 20px;
+    }
+}
+
+/* Animaciones */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Componentes específicos */
+.menu-card {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.menu-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: var(--light-green);
+}
+
+.menu-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+/* Dashboard stats */
+.stat-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card .card-body {
+    display: flex;
+    align-items: center;
+}
+
+.stat-card .stat-icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 15px;
+    background-color: rgba(126, 217, 87, 0.2);
+}
+
+.stat-card .stat-icon i {
+    font-size: 30px;
+    color: var(--primary-color);
+}
+
+.stat-card .stat-details h3 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-card .stat-details p {
+    margin-bottom: 0;
+    color: #6c757d;
+}
