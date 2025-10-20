@@ -1,99 +1,3 @@
-<?php
-// Iniciar sesión
-session_start();
-
-// Incluir utilidades de autenticación
-require_once '../../api/auth/auth_utils.php';
-
-// Verificar que el usuario tiene rol de administrador
-requiereRol(1);
-
-// Incluir la conexión a la base de datos
-$conexion = require_once '../../config/db.php';
-
-// Paginación
-$pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$registros_por_pagina = 10;
-$offset = ($pagina_actual - 1) * $registros_por_pagina;
-
-// Filtros
-$filtro_estado = isset($_GET['estado']) ? $_GET['estado'] : '';
-$filtro_cliente = isset($_GET['cliente']) ? $_GET['cliente'] : '';
-$filtro_fecha = isset($_GET['fecha']) ? $_GET['fecha'] : '';
-
-// Construir la consulta base
-$where_clauses = [];
-$params = [];
-$types = "";
-
-if (!empty($filtro_estado)) {
-    $where_clauses[] = "p.estado = ?";
-    $params[] = $filtro_estado;
-    $types .= "s";
-}
-
-if (!empty($filtro_cliente)) {
-    $where_clauses[] = "CONCAT(u.nombre, ' ', u.apellidos) LIKE ?";
-    $params[] = "%$filtro_cliente%";
-    $types .= "s";
-}
-
-if (!empty($filtro_fecha)) {
-    $where_clauses[] = "DATE(p.fecha_pedido) = ?";
-    $params[] = $filtro_fecha;
-    $types .= "s";
-}
-
-$where_sql = '';
-if (!empty($where_clauses)) {
-    $where_sql = "WHERE " . implode(" AND ", $where_clauses);
-}
-
-// Consulta para obtener el total de registros con filtros
-$query_count = "
-    SELECT COUNT(*) as total 
-    FROM pedidos p
-    JOIN clientes c ON p.id_cliente = c.id
-    JOIN usuarios u ON c.id_usuario = u.id
-    $where_sql
-";
-
-$stmt_count = $conexion->prepare($query_count);
-if (!empty($params)) {
-    $stmt_count->bind_param($types, ...$params);
-}
-$stmt_count->execute();
-$result_count = $stmt_count->get_result();
-$total_registros = $result_count->fetch_assoc()['total'];
-
-$total_paginas = ceil($total_registros / $registros_por_pagina);
-
-// Consulta para obtener los pedidos con paginación
-$query_pedidos = "
-    SELECT p.id, p.fecha_pedido, CONCAT(u.nombre, ' ', u.apellidos) as cliente, 
-           p.total, p.estado, p.direccion_entrega, ci.nombre as ciudad, 
-           p.refrigeracion_requerida, p.tiene_tracking, t.id as id_transportista,
-           CONCAT(ut.nombre, ' ', ut.apellidos) as transportista
-    FROM pedidos p
-    JOIN clientes c ON p.id_cliente = c.id
-    JOIN usuarios u ON c.id_usuario = u.id
-    JOIN ciudades ci ON p.id_ciudad_entrega = ci.id
-    LEFT JOIN transportistas t ON p.id_transportista = t.id
-    LEFT JOIN usuarios ut ON t.id_usuario = ut.id
-    $where_sql
-    ORDER BY p.fecha_pedido DESC
-    LIMIT ? OFFSET ?
-";
-
-$stmt_pedidos = $conexion->prepare($query_pedidos);
-$params[] = $registros_por_pagina;
-$params[] = $offset;
-$types .= "ii";
-
-$stmt_pedidos->bind_param($types, ...$params);
-$stmt_pedidos->execute();
-$resultado_pedidos = $stmt_pedidos->get_result();
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -114,12 +18,12 @@ $resultado_pedidos = $stmt_pedidos->get_result();
             <div class="col-md-3 col-lg-2 admin-sidebar d-none d-md-block">
                 <h5 class="px-3 mb-4">Panel de Administración</h5>
                 <div class="nav flex-column">
-                    <a class="nav-link" href="../dashboard/admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a class="nav-link" href="../../index.php?ruta=dashboard/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                     <a class="nav-link active" href="#"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-                    <a class="nav-link" href="../clientes/listar.php"><i class="fas fa-users"></i> Clientes</a>
-                    <a class="nav-link" href="../transportistas/listar.php"><i class="fas fa-truck"></i> Transportistas</a>
-                    <a class="nav-link" href="../productos/listar.php"><i class="fas fa-box"></i> Productos</a>
-                    <a class="nav-link" href="../reportes/index.php"><i class="fas fa-chart-bar"></i> Reportes</a>
+                    <a class="nav-link" href="../../index.php?ruta=clientes/listar"><i class="fas fa-users"></i> Clientes</a>
+                    <a class="nav-link" href="../../index.php?ruta=transportistas/listar"><i class="fas fa-truck"></i> Transportistas</a>
+                    <a class="nav-link" href="../../index.php?ruta=productos/listar"><i class="fas fa-box"></i> Productos</a>
+                    <a class="nav-link" href="../../index.php?ruta=reportes/index"><i class="fas fa-chart-bar"></i> Reportes</a>
                     <a class="nav-link" href="../usuarios/listar.php"><i class="fas fa-user-cog"></i> Usuarios</a>
                     <a class="nav-link" href="../../api/auth/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                 </div>

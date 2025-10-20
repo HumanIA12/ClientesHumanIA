@@ -1,110 +1,3 @@
-<?php
-// Iniciar sesión
-session_start();
-
-// Incluir utilidades de autenticación
-require_once '../../api/auth/auth_utils.php';
-
-// Verificar que el usuario tiene rol de administrador
-requiereRol(1);
-
-// Incluir la conexión a la base de datos
-$conexion = require_once '../../config/db.php';
-
-// Paginación
-$pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$registros_por_pagina = 10;
-$offset = ($pagina_actual - 1) * $registros_por_pagina;
-
-// Filtros
-$filtro_nombre = isset($_GET['nombre']) ? $_GET['nombre'] : '';
-$filtro_estado = isset($_GET['estado']) ? $_GET['estado'] : '';
-$filtro_stock = isset($_GET['stock']) ? $_GET['stock'] : '';
-
-// Construir la consulta base
-$where_clauses = [];
-$params = [];
-$types = "";
-
-if (!empty($filtro_nombre)) {
-    $where_clauses[] = "nombre LIKE ?";
-    $params[] = "%$filtro_nombre%";
-    $types .= "s";
-}
-
-if (!empty($filtro_estado)) {
-    $where_clauses[] = "estado = ?";
-    $params[] = $filtro_estado;
-    $types .= "s";
-}
-
-if (!empty($filtro_stock)) {
-    switch ($filtro_stock) {
-        case 'sin_stock':
-            $where_clauses[] = "stock = 0";
-            break;
-        case 'bajo_stock':
-            $where_clauses[] = "stock > 0 AND stock <= 10";
-            break;
-        case 'stock_normal':
-            $where_clauses[] = "stock > 10";
-            break;
-    }
-}
-
-$where_sql = '';
-if (!empty($where_clauses)) {
-    $where_sql = "WHERE " . implode(" AND ", $where_clauses);
-}
-
-// Consulta para obtener el total de registros con filtros
-$query_count = "
-    SELECT COUNT(*) as total 
-    FROM productos
-    $where_sql
-";
-
-$stmt_count = $conexion->prepare($query_count);
-if (!empty($params)) {
-    $stmt_count->bind_param($types, ...$params);
-}
-$stmt_count->execute();
-$result_count = $stmt_count->get_result();
-$total_registros = $result_count->fetch_assoc()['total'];
-
-$total_paginas = ceil($total_registros / $registros_por_pagina);
-
-// Consulta para obtener los productos con paginación
-$query_productos = "
-    SELECT id, nombre, descripcion, precio, stock, estado, fecha_agregado
-    FROM productos
-    $where_sql
-    ORDER BY nombre
-    LIMIT ? OFFSET ?
-";
-
-$params[] = $registros_por_pagina;
-$params[] = $offset;
-$types .= "ii";
-
-$stmt_productos = $conexion->prepare($query_productos);
-$stmt_productos->bind_param($types, ...$params);
-$stmt_productos->execute();
-$resultado_productos = $stmt_productos->get_result();
-
-// Mensaje para acciones como eliminar, actualizar, etc.
-$mensaje = '';
-$tipo_mensaje = '';
-
-if (isset($_SESSION['mensaje']) && isset($_SESSION['tipo_mensaje'])) {
-    $mensaje = $_SESSION['mensaje'];
-    $tipo_mensaje = $_SESSION['tipo_mensaje'];
-    
-    // Limpiar las variables de sesión
-    unset($_SESSION['mensaje']);
-    unset($_SESSION['tipo_mensaje']);
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -125,12 +18,12 @@ if (isset($_SESSION['mensaje']) && isset($_SESSION['tipo_mensaje'])) {
             <div class="col-md-3 col-lg-2 admin-sidebar d-none d-md-block">
                 <h5 class="px-3 mb-4">Panel de Administración</h5>
                 <div class="nav flex-column">
-                    <a class="nav-link" href="../dashboard/admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                    <a class="nav-link" href="../pedidos/listar.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-                    <a class="nav-link" href="../clientes/listar.php"><i class="fas fa-users"></i> Clientes</a>
-                    <a class="nav-link" href="../transportistas/listar.php"><i class="fas fa-truck"></i> Transportistas</a>
+                    <a class="nav-link" href="../../index.php?ruta=dashboard/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a class="nav-link" href="../../index.php?ruta=pedidos/listar"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+                    <a class="nav-link" href="../../index.php?ruta=clientes/listar"><i class="fas fa-users"></i> Clientes</a>
+                    <a class="nav-link" href="../../index.php?ruta=transportistas/listar"><i class="fas fa-truck"></i> Transportistas</a>
                     <a class="nav-link active" href="#"><i class="fas fa-box"></i> Productos</a>
-                    <a class="nav-link" href="../reportes/index.php"><i class="fas fa-chart-bar"></i> Reportes</a>
+                    <a class="nav-link" href="../../index.php?ruta=reportes/index"><i class="fas fa-chart-bar"></i> Reportes</a>
                     <a class="nav-link" href="../usuarios/listar.php"><i class="fas fa-user-cog"></i> Usuarios</a>
                     <a class="nav-link" href="../../api/auth/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                 </div>
@@ -314,20 +207,7 @@ if (isset($_SESSION['mensaje']) && isset($_SESSION['tipo_mensaje'])) {
                     <div class="card-body">
                         <div class="row">
                             <?php
-                            // Consulta para obtener el resumen de productos
-                            $query_resumen = "
-                                SELECT COUNT(*) as total_productos,
-                                       SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) as sin_stock,
-                                       SUM(CASE WHEN stock > 0 AND stock <= 10 THEN 1 ELSE 0 END) as bajo_stock,
-                                       SUM(CASE WHEN stock > 10 THEN 1 ELSE 0 END) as stock_normal,
-                                       SUM(CASE WHEN estado = 'disponible' THEN 1 ELSE 0 END) as disponibles,
-                                       SUM(CASE WHEN estado = 'agotado' THEN 1 ELSE 0 END) as agotados,
-                                       SUM(CASE WHEN estado = 'descontinuado' THEN 1 ELSE 0 END) as descontinuados
-                                FROM productos
-                            ";
-                            $resultado_resumen = $conexion->query($query_resumen);
-                            $resumen = $resultado_resumen->fetch_assoc();
-                            ?>
+                            <?php // Datos de resumen disponibles en $resumen ?>
                             
                             <div class="col-md-4">
                                 <h6>Total de productos: <?php echo $resumen['total_productos']; ?></h6>

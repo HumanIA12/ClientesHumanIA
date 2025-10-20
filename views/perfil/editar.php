@@ -198,7 +198,7 @@ switch ($usuario['id_rol']) {
                     
                     <?php if ($usuario['id_rol'] == 1): // Admin ?>
                         <a class="nav-link" href="../pedidos/listar.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-                        <a class="nav-link" href="../clientes/listar.php"><i class="fas fa-users"></i> Clientes</a>
+                        <a class="nav-link" href="../../index.php?ruta=clientes/listar"><i class="fas fa-users"></i> Clientes</a>
                         <a class="nav-link" href="../transportistas/listar.php"><i class="fas fa-truck"></i> Transportistas</a>
                         <a class="nav-link" href="../productos/listar.php"><i class="fas fa-box"></i> Productos</a>
                         <a class="nav-link" href="../reportes/index.php"><i class="fas fa-chart-bar"></i> Reportes</a>

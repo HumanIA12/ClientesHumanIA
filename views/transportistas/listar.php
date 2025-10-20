@@ -1,101 +1,3 @@
-<?php
-// Iniciar sesión
-session_start();
-
-// Incluir utilidades de autenticación
-require_once '../../api/auth/auth_utils.php';
-
-// Verificar que el usuario tiene rol de administrador
-requiereRol(1);
-
-// Incluir la conexión a la base de datos
-$conexion = require_once '../../config/db.php';
-
-// Paginación
-$pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$registros_por_pagina = 10;
-$offset = ($pagina_actual - 1) * $registros_por_pagina;
-
-// Filtros
-$filtro_nombre = isset($_GET['nombre']) ? $_GET['nombre'] : '';
-$filtro_empresa = isset($_GET['empresa']) ? $_GET['empresa'] : '';
-$filtro_disponibilidad = isset($_GET['disponibilidad']) ? $_GET['disponibilidad'] : '';
-
-// Construir la consulta base
-$where_clauses = [];
-$params = [];
-$types = "";
-
-if (!empty($filtro_nombre)) {
-    $where_clauses[] = "CONCAT(u.nombre, ' ', u.apellidos) LIKE ?";
-    $params[] = "%$filtro_nombre%";
-    $types .= "s";
-}
-
-if (!empty($filtro_empresa)) {
-    $where_clauses[] = "et.id = ?";
-    $params[] = $filtro_empresa;
-    $types .= "i";
-}
-
-if (!empty($filtro_disponibilidad)) {
-    $where_clauses[] = "t.disponibilidad = ?";
-    $params[] = $filtro_disponibilidad;
-    $types .= "s";
-}
-
-$where_sql = '';
-if (!empty($where_clauses)) {
-    $where_sql = "WHERE " . implode(" AND ", $where_clauses);
-}
-
-// Consulta para obtener el total de registros con filtros
-$query_count = "
-    SELECT COUNT(*) as total 
-    FROM transportistas t
-    JOIN usuarios u ON t.id_usuario = u.id
-    JOIN empresas_transporte et ON t.id_empresa = et.id
-    JOIN tipos_vehiculo tv ON t.id_tipo_vehiculo = tv.id
-    $where_sql
-";
-
-$stmt_count = $conexion->prepare($query_count);
-if (!empty($params)) {
-    $stmt_count->bind_param($types, ...$params);
-}
-$stmt_count->execute();
-$result_count = $stmt_count->get_result();
-$total_registros = $result_count->fetch_assoc()['total'];
-
-$total_paginas = ceil($total_registros / $registros_por_pagina);
-
-// Consulta para obtener los transportistas con paginación
-$query_transportistas = "
-    SELECT t.id, u.nombre, u.apellidos, u.username, u.email, u.telefono, 
-           t.licencia, et.nombre as empresa, tv.nombre as tipo_vehiculo,
-           t.disponibilidad, t.tiene_gps, tv.tiene_refrigeracion, u.estado
-    FROM transportistas t
-    JOIN usuarios u ON t.id_usuario = u.id
-    JOIN empresas_transporte et ON t.id_empresa = et.id
-    JOIN tipos_vehiculo tv ON t.id_tipo_vehiculo = tv.id
-    $where_sql
-    ORDER BY u.nombre, u.apellidos
-    LIMIT ? OFFSET ?
-";
-
-$params[] = $registros_por_pagina;
-$params[] = $offset;
-$types .= "ii";
-
-$stmt_transportistas = $conexion->prepare($query_transportistas);
-$stmt_transportistas->bind_param($types, ...$params);
-$stmt_transportistas->execute();
-$resultado_transportistas = $stmt_transportistas->get_result();
-
-// Obtener empresas para filtro
-$query_empresas = "SELECT id, nombre FROM empresas_transporte ORDER BY nombre";
-$resultado_empresas = $conexion->query($query_empresas);
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -116,12 +18,12 @@ $resultado_empresas = $conexion->query($query_empresas);
             <div class="col-md-3 col-lg-2 admin-sidebar d-none d-md-block">
                 <h5 class="px-3 mb-4">Panel de Administración</h5>
                 <div class="nav flex-column">
-                    <a class="nav-link" href="../dashboard/admin.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                    <a class="nav-link" href="../pedidos/listar.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-                    <a class="nav-link" href="../clientes/listar.php"><i class="fas fa-users"></i> Clientes</a>
+                    <a class="nav-link" href="../../index.php?ruta=dashboard/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a class="nav-link" href="../../index.php?ruta=pedidos/listar"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+                    <a class="nav-link" href="../../index.php?ruta=clientes/listar"><i class="fas fa-users"></i> Clientes</a>
                     <a class="nav-link active" href="#"><i class="fas fa-truck"></i> Transportistas</a>
-                    <a class="nav-link" href="../productos/listar.php"><i class="fas fa-box"></i> Productos</a>
-                    <a class="nav-link" href="../reportes/index.php"><i class="fas fa-chart-bar"></i> Reportes</a>
+                    <a class="nav-link" href="../../index.php?ruta=productos/listar"><i class="fas fa-box"></i> Productos</a>
+                    <a class="nav-link" href="../../index.php?ruta=reportes/index"><i class="fas fa-chart-bar"></i> Reportes</a>
                     <a class="nav-link" href="../usuarios/listar.php"><i class="fas fa-user-cog"></i> Usuarios</a>
                     <a class="nav-link" href="../../api/auth/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                 </div>
