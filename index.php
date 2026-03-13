@@ -28,11 +28,12 @@ $conn->close();
         <p class="card-number"><?php echo $asistencias_hoy; ?></p>
         <a href="/asistencia.php" class="btn">Tomar Asistencia</a>
     </div>
-    <div class="card">
-        <h3>Descargar Sistema</h3>
-        <p class="card-number">ZIP</p>
-        <a href="/descargar.php" class="btn">Descargar</a>
-    </div>
+</div>
+
+<div class="download-section">
+    <h2>Descargar Sistema</h2>
+    <p>Descarga todos los archivos del sistema de asistencia escolar en un solo archivo ZIP.</p>
+    <a href="/descargar.php" class="btn-download">Descargar ZIP</a>
 </div>
 
 <?php include 'includes/footer.php'; ?>
