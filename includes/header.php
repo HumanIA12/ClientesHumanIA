@@ -17,6 +17,7 @@
             <li><a href="/cursos.php">Cursos</a></li>
             <li><a href="/asistencia.php">Tomar Asistencia</a></li>
             <li><a href="/reportes.php">Reportes</a></li>
+            <li><a href="/descargar.php">Descargar ZIP</a></li>
         </ul>
     </nav>
     <div class="container">
