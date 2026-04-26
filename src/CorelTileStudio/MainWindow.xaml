@@ -1,0 +1,311 @@
+<Window x:Class="CorelTileStudio.MainWindow"
+        x:Name="Self"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:CorelTileStudio.ViewModels"
+        xmlns:cnv="clr-namespace:CorelTileStudio.Converters"
+        Title="CorelTile Studio"
+        Width="380" Height="720"
+        MinWidth="340" MinHeight="540"
+        WindowStartupLocation="Manual"
+        Left="60" Top="60"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize"
+        ShowInTaskbar="True"
+        Topmost="True"
+        FontFamily="Segoe UI">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <cnv:InverseBooleanConverter x:Key="InvBool"/>
+    </Window.Resources>
+
+    <Border Background="{StaticResource BgDeep}"
+            BorderBrush="{StaticResource BorderStrongBrush}"
+            BorderThickness="1"
+            CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.55" Color="Black"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>  <!-- TitleBar -->
+                <RowDefinition Height="*"/>     <!-- Content   -->
+                <RowDefinition Height="Auto"/>  <!-- StatusBar -->
+            </Grid.RowDefinitions>
+
+            <!-- ============ TITLE BAR ============ -->
+            <Border Grid.Row="0" Height="42"
+                    Background="{StaticResource BgPanel}"
+                    CornerRadius="10,10,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" Margin="14,0" VerticalAlignment="Center">
+                        <Border Width="22" Height="22" CornerRadius="5" Background="{StaticResource AccentBrush}"
+                                VerticalAlignment="Center">
+                            <TextBlock Text="C" Foreground="White" FontWeight="Bold"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="CorelTile Studio" Foreground="{StaticResource TextBrush}"
+                                   FontWeight="Bold" FontSize="13" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <TextBlock Text="·  Plantillador de impresion" Foreground="{StaticResource TextMutedBrush}"
+                                   FontSize="11" VerticalAlignment="Center" Margin="8,1,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Margin="0,0,8,0">
+                        <ToggleButton x:Name="PinButton"
+                                      Width="34" Height="28"
+                                      Cursor="Hand"
+                                      IsChecked="{Binding Topmost, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}"
+                                      ToolTip="Mantener encima de todas las ventanas">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="Bd" Background="Transparent" CornerRadius="3">
+                                        <TextBlock Text="📌" FontSize="13" HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" Foreground="{StaticResource TextMutedBrush}"
+                                                   x:Name="Icon"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource BgPanelHover}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="Icon" Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <Button Style="{StaticResource ChromeButton}" Click="MinimizeButton_Click"
+                                Content="—" ToolTip="Minimizar"/>
+                        <Button Style="{StaticResource ChromeCloseButton}" Click="CloseButton_Click"
+                                Content="✕" ToolTip="Cerrar"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ============ CONTENT ============ -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="14,14,14,4">
+                <StackPanel>
+
+                    <!-- Conexion -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="CONEXION" Style="{StaticResource SectionTitle}"/>
+                                <Ellipse Width="9" Height="9" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                         Margin="0,4,0,0">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Fill" Value="{StaticResource DangerBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                    <Setter Property="Fill" Value="{StaticResource SuccessBrush}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Foreground="{StaticResource TextBrush}" FontSize="12">
+                                        <Run Text="CorelDRAW "/>
+                                        <Run Text="{Binding CorelVersion}" FontWeight="SemiBold"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding SelectionInfo}" Style="{StaticResource HintText}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Style="{StaticResource GhostButton}"
+                                        Command="{Binding ConnectCommand}" Content="Conectar"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Seleccion -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="OBJETO A PLANTILLAR" Style="{StaticResource SectionTitle}"/>
+                            <TextBlock Text="Selecciona en CorelDRAW el objeto (PowerClip u otro), luego pulsa &#34;Leer seleccion&#34;."
+                                       Style="{StaticResource HintText}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="ANCHO (cm)" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding ObjectWidthCm, StringFormat={}{0:0.###}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="ALTO (cm)" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding ObjectHeightCm, StringFormat={}{0:0.###}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button Margin="0,10,0,0" Style="{StaticResource GhostButton}"
+                                    Command="{Binding ReadSelectionCommand}" HorizontalAlignment="Stretch"
+                                    Content="↻  Leer seleccion de CorelDRAW"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Area de impresion -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="AREA DE IMPRESION" Style="{StaticResource SectionTitle}"/>
+                            <CheckBox Content="Usar pagina activa de CorelDRAW"
+                                      IsChecked="{Binding UseCorelPage}" Margin="0,0,0,10"/>
+                            <Grid IsEnabled="{Binding UseCorelPage, Converter={StaticResource InvBool}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="ANCHO (cm)" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding AreaWidthCm, StringFormat={}{0:0.###}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="ALTO (cm)" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding AreaHeightCm, StringFormat={}{0:0.###}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button Margin="0,10,0,0" Style="{StaticResource GhostButton}"
+                                    Command="{Binding ReadPageCommand}" HorizontalAlignment="Stretch"
+                                    Content="↻  Leer pagina activa"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Margenes y espaciado -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="MARGENES Y ESPACIADO (cm)" Style="{StaticResource SectionTitle}"/>
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="IZQ" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding MarginLeftCm, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="DER" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding MarginRightCm, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="SUP" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding MarginTopCm, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="6">
+                                    <TextBlock Text="INF" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding MarginBottomCm, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="ESPACIADO X" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding SpacingXCm, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="ESPACIADO Y" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding SpacingYCm, StringFormat={}{0:0.##}, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Layout -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="DISTRIBUCION" Style="{StaticResource SectionTitle}"/>
+                            <CheckBox Content="Auto-ajustar (maximo de copias)"
+                                      IsChecked="{Binding AutoFit}" Margin="0,0,0,8"/>
+                            <Grid IsEnabled="{Binding AutoFit, Converter={StaticResource InvBool}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="COLUMNAS" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding Columns, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="FILAS" Style="{StaticResource LabelText}"/>
+                                    <TextBox Text="{Binding Rows, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </Grid>
+                            <CheckBox Content="Centrar grilla en el area util"
+                                      IsChecked="{Binding CenterInArea}" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Plan -->
+                    <Border Style="{StaticResource Card}">
+                        <StackPanel>
+                            <TextBlock Text="PLAN" Style="{StaticResource SectionTitle}"/>
+                            <TextBlock Text="{Binding PlanSummary}" Foreground="{StaticResource TextBrush}"
+                                       FontSize="12" TextWrapping="Wrap"/>
+                            <Border Visibility="{Binding HasWarning, Converter={StaticResource BoolToVis}}"
+                                    Background="#22E2516C" BorderBrush="{StaticResource DangerBrush}"
+                                    BorderThickness="1" CornerRadius="4" Padding="8,6" Margin="0,8,0,0">
+                                <TextBlock Text="{Binding PlanWarning}" Foreground="{StaticResource DangerBrush}"
+                                           FontSize="11" TextWrapping="Wrap"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Acciones -->
+                    <Grid Margin="0,2,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource PrimaryButton}"
+                                Command="{Binding ApplyTileCommand}" Padding="12,10"
+                                Content="✦  PLANTILLAR EN COREL"/>
+                        <Button Grid.Column="2" Style="{StaticResource GhostButton}"
+                                Command="{Binding PrintCommand}" Padding="14,10"
+                                Content="🖶  Imprimir"/>
+                    </Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- ============ STATUS BAR ============ -->
+            <Border Grid.Row="2" Background="{StaticResource BgPanel}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0"
+                    CornerRadius="0,0,10,10" Padding="14,8">
+                <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource TextMutedBrush}"
+                           FontSize="11" TextTrimming="CharacterEllipsis"/>
+            </Border>
+
+        </Grid>
+    </Border>
+
+</Window>
