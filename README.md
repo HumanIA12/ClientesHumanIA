@@ -59,26 +59,33 @@ con medidas en **centimetros**, con **vista previa visual**, **marcas de corte**
 
 ---
 
-## Compilacion
+## Compilacion (.NET 8)
 
-Requisitos: Windows + .NET SDK 6.0+ (provee `dotnet` y compila para net48).
+Requisitos: Windows + **.NET 8 SDK** (https://dotnet.microsoft.com/download).
 
 ```cmd
 cd ClientesHumanIA
-build.bat
+build.bat           :: framework-dependent: dist\CorelTileStudio.exe (~1 MB)
+build.bat portable  :: self-contained:      dist\CorelTileStudio.exe (~80 MB)
 ```
 
-El binario final queda en `dist\CorelTileStudio.exe`.
+| Modo                      | Tamano | Dependencia en el equipo destino                        |
+|---------------------------|-------:|---------------------------------------------------------|
+| `build.bat`               | ~1 MB  | Necesita **.NET 8 Desktop Runtime** instalado           |
+| `build.bat portable`      | ~80 MB | Ninguna - corre tal cual en cualquier Windows 10/11 x64 |
 
-> Tambien puedes abrir `CorelTileStudio.sln` en Visual Studio 2022 y compilar
-> la configuracion `Release | AnyCPU`.
-
-### Single-file deployment
+Por debajo, el script invoca:
 
 ```cmd
-dotnet publish src\CorelTileStudio\CorelTileStudio.csproj -c Release ^
-        -p:PublishSingleFile=true -p:DebugType=None
+dotnet publish src\CorelTileStudio\CorelTileStudio.csproj ^
+    -c Release -r win-x64 --self-contained <true|false> ^
+    -p:PublishSingleFile=true ^
+    -p:IncludeNativeLibrariesForSelfExtract=true ^
+    -o dist
 ```
+
+> Tambien puedes abrir `CorelTileStudio.sln` en Visual Studio 2022 (17.8 +) y
+> compilar la configuracion `Release | AnyCPU`.
 
 ---
 

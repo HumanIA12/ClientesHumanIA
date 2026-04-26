@@ -1,27 +1,32 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>CorelTileStudio</RootNamespace>
     <AssemblyName>CorelTileStudio</AssemblyName>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <Product>CorelTile Studio</Product>
     <Company>HumanIA</Company>
     <Copyright>Copyright (c) HumanIA</Copyright>
-    <Version>1.0.0</Version>
-    <FileVersion>1.0.0.0</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Version>2.0.0</Version>
+    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Description>Plugin flotante para CorelDRAW que plantilla objetos (incluyendo PowerClips) en un area de impresion con medidas en cm.</Description>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="System.Drawing" />
-  </ItemGroup>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+    <!-- Late-binding COM via 'dynamic' -->
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+
+    <!-- WPF + single-file behaves better with these defaults -->
+    <PublishSingleFile Condition="'$(PublishSingleFile)' == ''">false</PublishSingleFile>
+    <SelfContained Condition="'$(SelfContained)' == ''">false</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
 
 </Project>

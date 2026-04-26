@@ -22,7 +22,7 @@ namespace CorelTileStudio.Services
         {
             if (_app != null) return;
 
-            try { _app = Marshal.GetActiveObject("CorelDRAW.Application"); }
+            try { _app = ComUtils.GetActiveObject("CorelDRAW.Application"); }
             catch (COMException)
             {
                 Type t = Type.GetTypeFromProgID("CorelDRAW.Application");

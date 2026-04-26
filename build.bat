@@ -1,41 +1,67 @@
 @echo off
 REM ===================================================================
-REM  CorelTile Studio - script de compilacion para Windows
-REM  Genera dist\CorelTileStudio.exe (single .EXE) en modo Release.
+REM  CorelTile Studio - script de compilacion para Windows (.NET 8)
+REM
+REM   build.bat            -> framework-dependent single-file (~1 MB)
+REM                           requiere "Microsoft .NET 8 Desktop Runtime"
+REM                           https://dotnet.microsoft.com/download
+REM
+REM   build.bat portable   -> self-contained single-file (~80 MB)
+REM                           NO requiere ningun runtime instalado
+REM
+REM  Salida: dist\CorelTileStudio.exe
 REM ===================================================================
 
 setlocal
-set CONFIG=Release
 set ROOT=%~dp0
 set OUT=%ROOT%dist
-
-echo.
-echo [CorelTile Studio] Compilando en modo %CONFIG%...
-echo.
+set RID=win-x64
+set MODE=%1
 
 where dotnet >nul 2>nul
 if errorlevel 1 (
-    echo ERROR: no se encontro 'dotnet'. Instala .NET SDK 6.0+ desde
+    echo ERROR: no se encontro 'dotnet'. Instala .NET 8 SDK desde
     echo https://dotnet.microsoft.com/download   y vuelve a ejecutar.
     exit /b 1
 )
 
-dotnet build "%ROOT%CorelTileStudio.sln" -c %CONFIG% -v minimal
+if /I "%MODE%"=="portable" (
+    echo.
+    echo [CorelTile Studio] Publicando self-contained ^(%RID%^)...
+    echo.
+    dotnet publish "%ROOT%src\CorelTileStudio\CorelTileStudio.csproj" ^
+        -c Release -r %RID% --self-contained true ^
+        -p:PublishSingleFile=true ^
+        -p:IncludeNativeLibrariesForSelfExtract=true ^
+        -p:EnableCompressionInSingleFile=true ^
+        -o "%OUT%"
+) else (
+    echo.
+    echo [CorelTile Studio] Publicando framework-dependent ^(%RID%^)...
+    echo.
+    dotnet publish "%ROOT%src\CorelTileStudio\CorelTileStudio.csproj" ^
+        -c Release -r %RID% --self-contained false ^
+        -p:PublishSingleFile=true ^
+        -o "%OUT%"
+)
+
 if errorlevel 1 (
     echo.
     echo ERROR durante la compilacion.
     exit /b 1
 )
 
-if not exist "%OUT%" mkdir "%OUT%"
-
-set BIN=%ROOT%src\CorelTileStudio\bin\%CONFIG%\net48
-copy /Y "%BIN%\CorelTileStudio.exe"        "%OUT%" >nul
-copy /Y "%BIN%\CorelTileStudio.exe.config" "%OUT%" >nul 2>nul
+REM Limpiamos archivos sobrantes; queremos solo el .exe
+del /Q "%OUT%\*.pdb" 2>nul
 
 echo.
 echo [OK] Generado: %OUT%\CorelTileStudio.exe
 echo.
-echo Doble-click en el .EXE con CorelDRAW abierto y pulsa "Conectar".
+if /I "%MODE%"=="portable" (
+    echo Modo PORTABLE: el .exe corre sin dependencias.
+) else (
+    echo Modo FRAMEWORK-DEPENDENT: requiere .NET 8 Desktop Runtime.
+    echo Para una version portable usa:  build.bat portable
+)
 echo.
 endlocal
