@@ -7,6 +7,10 @@ const Utils = {
     return "S/ " + Number(num).toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   },
 
+  formatoNum(num) {
+    return Number(num || 0).toLocaleString("es-PE", { maximumFractionDigits: 0 });
+  },
+
   formatoFecha(iso) {
     if (!iso) return "—";
     const d = new Date(iso);

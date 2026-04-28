@@ -3,37 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar sesion — ClientesHumanIA</title>
+  <title>DINET · Acceso al sistema</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="css/style.css">
-  <script>
-    tailwind.config = { darkMode: "class" };
-  </script>
+  <script>tailwind.config = { darkMode: "class" };</script>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+<body class="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4">
 
-  <!-- Decoracion de fondo -->
-  <div class="absolute inset-0 overflow-hidden -z-10">
-    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-indigo-300/30 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-300/30 rounded-full blur-3xl"></div>
+  <!-- Banda decorativa superior -->
+  <div class="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-500 via-amber-500 via-emerald-500 to-sky-500 z-20"></div>
+
+  <!-- Decoracion -->
+  <div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-blue-300/20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl"></div>
   </div>
 
   <div class="w-full max-w-md animate-slide-up">
-    <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 dark:border-slate-700 p-8">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-8">
 
-      <!-- Logo y titulo -->
-      <div class="text-center mb-8">
-        <div class="inline-flex w-16 h-16 rounded-2xl items-center justify-center text-white text-2xl font-bold mb-4 shadow-lg" style="background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));">
-          <i data-lucide="layout-dashboard" class="w-8 h-8"></i>
+      <!-- Logo -->
+      <div class="text-center mb-6">
+        <div class="inline-flex w-14 h-14 rounded-xl bg-slate-900 dark:bg-slate-700 items-center justify-center text-white text-2xl font-bold mb-3 shadow-lg">
+          D
         </div>
-        <h1 class="text-2xl font-bold text-slate-900 dark:text-white" data-app-nombre>App</h1>
-        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-app-eslogan>...</p>
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-white" data-app-nombre>DINET</h1>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5" data-app-subtitulo>Estatus Picking Unilever</p>
       </div>
 
-      <!-- Formulario -->
       <form id="form-login" class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Usuario</label>
@@ -54,33 +54,24 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-between text-sm">
-          <label class="flex items-center gap-2 text-slate-600 dark:text-slate-400 cursor-pointer">
-            <input type="checkbox" class="rounded border-slate-300">
-            Recordarme
-          </label>
-          <a href="#" class="text-indigo-600 hover:text-indigo-700 font-medium">¿Olvidaste tu clave?</a>
-        </div>
-
         <button type="submit" class="btn-gradient w-full py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2">
           <i data-lucide="log-in" class="w-5 h-5"></i>
-          Ingresar
+          Ingresar al sistema
         </button>
       </form>
 
-      <!-- Credenciales demo -->
-      <div class="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-100 dark:border-indigo-900/30">
-        <p class="text-xs font-semibold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-1">
-          <i data-lucide="info" class="w-4 h-4"></i> Credenciales de prueba
+      <div class="mt-6 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-700">
+        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-1">
+          <i data-lucide="key" class="w-3.5 h-3.5"></i> Credenciales de prueba
         </p>
-        <div class="text-xs text-indigo-700 dark:text-indigo-300 space-y-1 font-mono">
-          <div>admin / admin123</div>
-          <div>vendedor / vendedor123</div>
+        <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <div>admin · admin123</div>
+          <div>operador · operador123</div>
         </div>
       </div>
 
-      <p class="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
-        © <span data-app-anio>2025</span> <span data-app-empresa>Empresa</span> · <span data-app-version>v</span>
+      <p class="text-center text-xs text-slate-400 mt-6">
+        © <span data-app-anio>2025</span> <span data-app-empresa>DINET S.A</span> · <span data-app-version>v</span>
       </p>
     </div>
   </div>
@@ -90,16 +81,13 @@
   <script src="js/auth.js"></script>
   <script src="js/utils.js"></script>
   <script>
-    // Si ya hay sesion, redirige al dashboard
     if (DataStore.getSesion()) window.location.href = "dashboard.html";
 
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
 
-      const form = document.getElementById("form-login");
       const togglePass = document.getElementById("toggle-pass");
       const passInput = document.getElementById("password");
-
       togglePass.onclick = () => {
         const isPass = passInput.type === "password";
         passInput.type = isPass ? "text" : "password";
@@ -107,16 +95,16 @@
         lucide.createIcons();
       };
 
-      form.onsubmit = (e) => {
+      document.getElementById("form-login").onsubmit = (e) => {
         e.preventDefault();
-        const usuario = document.getElementById("usuario").value.trim();
-        const password = document.getElementById("password").value;
-        const resultado = Auth.login(usuario, password);
-        if (resultado.ok) {
-          Utils.toast("Bienvenido, " + resultado.usuario.nombre, "success");
+        const u = document.getElementById("usuario").value.trim();
+        const p = document.getElementById("password").value;
+        const r = Auth.login(u, p);
+        if (r.ok) {
+          Utils.toast("Bienvenido, " + r.usuario.nombre, "success");
           setTimeout(() => window.location.href = "dashboard.html", 600);
         } else {
-          Utils.toast(resultado.mensaje, "error");
+          Utils.toast(r.mensaje, "error");
         }
       };
     });

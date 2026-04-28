@@ -1,93 +1,118 @@
-# ClientesHumanIA — Dashboard V2
+# DINET · Estatus Picking Unilever — Dashboard V2
 
-Dashboard moderno de gestion de clientes con KPIs, graficos, CRUD completo y reportes.
+Sistema de monitoreo en tiempo real de embarques y picking, inspirado en el dashboard operativo DINET. Permite cargar archivos Excel reales y visualizar el avance de despachos por categoria, turno y estado.
 
 ## Caracteristicas
 
-- Login con autenticacion local (2 usuarios demo)
-- Dashboard con KPIs y graficos (Chart.js)
-- CRUD de clientes con buscador, filtros y paginacion
-- Modulo de reportes con analisis por estado y ciudad
-- Exportacion CSV / JSON / impresion
-- Modo claro/oscuro
-- Branding personalizable (nombre, eslogan, colores)
-- Persistencia en localStorage (sin backend)
-- Diseño responsive (movil y escritorio)
+- **Carga de Excel real** (`.xlsx`) con la estructura de embarques DINET
+- **Tabs por categoria:** TODOS / LOCAL / PROVINCIA / COPACKERS
+- **Velocimetros (gauges)** de Picking y Despacho con aguja animada
+- **Resumen Operativo** con Toneladas, m³ y Cajas (Total / Avance / Pendiente / Despacho)
+- **Avance por turno** (T1, T2, T3) con barras de progreso
+- **Detalle priorizado** con filtros: TODOS / COMPLETO / EN PROCESO / PENDIENTE
+- **Modal de detalle por DT** con operadores, tiempos, motivos de diferencia
+- **Modo EN VIVO** con auto-refresco configurable
+- **Filtros:** dia, turno, transporte, busqueda por DT/destino/cliente/placa
+- **Exportacion CSV** de la vista filtrada
+- **Modo claro/oscuro**
+- **Branding personalizable** (nombre, colores, refresco)
+
+## Estructura del Excel esperado
+
+El archivo debe tener una hoja llamada `Embarques` (o la primera hoja) con estas columnas:
+
+| Col | Campo | Descripcion |
+|-----|-------|-------------|
+| A | Fecha | Fecha del embarque |
+| B | Hora | Hora |
+| C | Fecha_Hora | Fecha y hora |
+| D | DT | Numero de DT |
+| E | Transporte | Empresa transportista |
+| F | Cliente | Cliente |
+| G | Destino | Destino completo |
+| H | Tipo_Destino | Canal Tradicional / Canal Moderno / Provincia / Copackers |
+| I | Peso_Ton | Peso en toneladas |
+| J | Volumen_m³ | Volumen en m³ |
+| K | Und_Solicitada | Unidades solicitadas |
+| L | Und_Picada | Unidades picadas |
+| M | Placa | Placa del vehiculo |
+| N | Pct_Avance | % de avance |
+| O | Estado | ok / pending |
+| P | Stage_Destino | Stage |
+| Q | Rampa | Rampa |
+| R | Fin_Carga | ok si esta cargado |
+| S | Turno | T1 / T2 / T3 |
+| T | Inicio_Picking | Inicio del picking |
+| U | Fin_Picking | Fin del picking |
+| V | Tiempo_Picking | Tiempo total |
+| W | Cita | Cita |
+| X-AA | Filtrador, Cod_Cliente_DINET, Cliente_DINET, Familias_DINET | Datos DINET |
+| AB | Motivo_Diferencia | Motivo si hay diferencia |
+| AC | Volumen_DINET | Volumen DINET |
+| AD | Peso_DINET | Peso DINET |
+| AE | Picado | % picado |
+| AF | Usuario_Ejecucion | Operadores separados por `/` |
 
 ## Stack tecnologico
 
 - HTML5 + TailwindCSS (CDN)
 - JavaScript Vanilla
-- Chart.js para graficos
+- Chart.js para gauges semi-circulares
+- SheetJS (xlsx.full.min.js) para parsing de Excel
 - Lucide Icons
 - localStorage para persistencia
 
-## Instalacion
+## Instalacion rapida
 
-### Opcion 1 — Doble clic
-1. Abre `index.html` con tu navegador (Chrome, Edge, Firefox).
-2. Listo. No requiere instalar nada.
+### Windows — Doble clic en `instalar-dashboard.bat`
+Descarga, instala y abre el sistema automaticamente.
 
-### Opcion 2 — Servidor local (opcional)
-```bash
-# Con Python
-python -m http.server 8080
-
-# Con Node.js
-npx serve .
-```
-Luego abre http://localhost:8080
+### Manual
+1. Descarga el ZIP del repo
+2. Descomprimelo
+3. Abre `index.html` con tu navegador
 
 ## Credenciales de prueba
 
-| Usuario   | Contraseña    | Rol           |
-|-----------|---------------|---------------|
-| admin     | admin123      | Administrador |
-| vendedor  | vendedor123   | Vendedor      |
+| Usuario   | Contraseña    | Rol               |
+|-----------|---------------|-------------------|
+| admin     | admin123      | Administrador     |
+| operador  | operador123   | Operador Logistica|
 
 ## Estructura del proyecto
 
 ```
-ClientesHumanIA/
+DINET/
 ├── index.html              Login
-├── dashboard.html          Dashboard principal
-├── clientes.html           CRUD clientes
-├── reportes.html           Reportes y analisis
+├── dashboard.html          Dashboard principal (DINET style)
 ├── configuracion.html      Configuracion
+├── instalar-dashboard.bat  Instalador automatico Windows
 ├── css/
-│   └── style.css           Estilos personalizados
+│   └── style.css
 ├── js/
-│   ├── config.js           Configuracion global (editable)
-│   ├── data.js             Capa de datos (localStorage)
-│   ├── auth.js             Autenticacion
+│   ├── config.js           Branding y categorias
+│   ├── data.js             Capa de datos + parser Excel
+│   ├── auth.js             Login
 │   ├── utils.js            Utilidades (toast, confirmar, exportar)
-│   ├── sidebar.js          Componentes de layout
-│   ├── dashboard.js        Logica del dashboard
-│   ├── clientes.js         Logica de clientes
-│   ├── reportes.js         Logica de reportes
-│   └── configuracion.js    Logica de configuracion
+│   └── dinet.js            Logica del dashboard
 └── README.md
 ```
 
 ## Personalizacion
 
-Edita `js/config.js` para cambiar:
-- Nombre de la app
-- Eslogan
-- Colores de marca
-- Datos de empresa
-- Usuarios por defecto
+### Mapeo de categorias
+En `js/config.js` editar `APP_CONFIG.categorias`:
+```js
+categorias: {
+  "LOCAL":     ["Canal Tradicional", "Canal Moderno"],
+  "PROVINCIA": ["Provincia"],
+  "COPACKERS": ["Copackers"]
+}
+```
 
-O hazlo desde la pagina **Configuracion** dentro de la app (se guarda en el navegador).
-
-## Roadmap (futuro)
-
-- [ ] Integracion con backend real (Node, PHP, Firebase)
-- [ ] Multiples roles y permisos
-- [ ] Historial de cambios por cliente
-- [ ] Notificaciones en tiempo real
-- [ ] Dashboard movil PWA
+### Otros ajustes
+- Refresco EN VIVO, colores, nombre → `js/config.js` o pagina **Configuracion** dentro de la app
 
 ---
 
-© HumanIA — v2.0.0
+© DINET S.A — v2.0.0

@@ -2,32 +2,48 @@
 // CONFIGURACION GENERAL — Editable
 // =====================================================
 // Cambia aqui el nombre, logo y colores de tu marca.
-// Los cambios se aplican en toda la aplicacion.
 // =====================================================
 
 const APP_CONFIG = {
-  // Nombre de la app (aparece en login, sidebar, titulos)
-  nombre: "ClientesHumanIA",
-  nombreCorto: "CHIA",
-  eslogan: "Gestion inteligente de clientes",
+  // Branding
+  nombre: "DINET",
+  nombreCorto: "D",
+  subtitulo: "Estatus Picking Unilever",
+  eslogan: "Sistema de monitoreo de embarques en tiempo real",
 
-  // Colores principales (usa codigos hex)
-  colorPrimario: "#4f46e5",   // Indigo
-  colorSecundario: "#06b6d4", // Cian
+  // Colores (acordes al diseño DINET)
+  colorPrimario: "#2563eb",   // Azul
+  colorSecundario: "#0ea5e9", // Sky
   colorAcento: "#f59e0b",     // Ambar
+  colorExito: "#10b981",      // Verde
+  colorPeligro: "#ef4444",    // Rojo
+  colorAlerta: "#f59e0b",     // Naranja
 
-  // Version
+  // Modo en vivo
+  refrescoSegundos: 30,
+
+  // Fuente de datos
+  archivoBase: "dinet_embarques_data.xlsx",
+  hojaExcel: "Embarques",
+
+  // Version y empresa
   version: "2.0.0",
-
-  // Empresa
-  empresa: "HumanIA",
-  email: "contacto@humania.com",
+  empresa: "DINET S.A",
+  email: "logistica@dinet.com.pe",
   anio: new Date().getFullYear(),
 
-  // Credenciales por defecto (cambiar en produccion)
+  // Mapeo de Tipo_Destino a categorias del dashboard
+  // LOCAL agrupa los canales de Lima; PROVINCIA y COPACKERS son aparte
+  categorias: {
+    "LOCAL":     ["Canal Tradicional", "Canal Moderno"],
+    "PROVINCIA": ["Provincia"],
+    "COPACKERS": ["Copackers"]
+  },
+
+  // Credenciales por defecto
   usuariosDefault: [
-    { usuario: "admin",     password: "admin123",   rol: "Administrador", nombre: "Administrador" },
-    { usuario: "vendedor",  password: "vendedor123", rol: "Vendedor",     nombre: "Juan Vendedor" }
+    { usuario: "admin",    password: "admin123",    rol: "Administrador",      nombre: "Administrador DINET" },
+    { usuario: "operador", password: "operador123", rol: "Operador Logistica", nombre: "Operador" }
   ]
 };
 
@@ -36,10 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.documentElement.style.setProperty("--color-primario", APP_CONFIG.colorPrimario);
   document.documentElement.style.setProperty("--color-secundario", APP_CONFIG.colorSecundario);
   document.documentElement.style.setProperty("--color-acento", APP_CONFIG.colorAcento);
+  document.documentElement.style.setProperty("--color-exito", APP_CONFIG.colorExito);
+  document.documentElement.style.setProperty("--color-peligro", APP_CONFIG.colorPeligro);
 
-  // Coloca el nombre de la app en cualquier elemento con [data-app-nombre]
   document.querySelectorAll("[data-app-nombre]").forEach(el => el.textContent = APP_CONFIG.nombre);
-  document.querySelectorAll("[data-app-eslogan]").forEach(el => el.textContent = APP_CONFIG.eslogan);
+  document.querySelectorAll("[data-app-subtitulo]").forEach(el => el.textContent = APP_CONFIG.subtitulo);
   document.querySelectorAll("[data-app-empresa]").forEach(el => el.textContent = APP_CONFIG.empresa);
   document.querySelectorAll("[data-app-anio]").forEach(el => el.textContent = APP_CONFIG.anio);
   document.querySelectorAll("[data-app-version]").forEach(el => el.textContent = "v" + APP_CONFIG.version);

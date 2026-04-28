@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Configuracion — ClientesHumanIA</title>
+  <title>Configuracion · DINET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -11,130 +11,228 @@
   <link rel="stylesheet" href="css/style.css">
   <script>tailwind.config = { darkMode: "class" };</script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 min-h-screen">
+<body class="bg-slate-100 dark:bg-slate-900 min-h-screen">
 
-  <div class="flex h-screen overflow-hidden">
-    <aside id="sidebar" class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col"></aside>
+  <div class="h-1.5 bg-gradient-to-r from-rose-500 via-amber-500 via-emerald-500 to-sky-500"></div>
 
-    <div class="flex-1 flex flex-col overflow-hidden">
-      <header id="topbar" class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4"></header>
+  <div class="max-w-3xl mx-auto p-4 lg:p-6 space-y-6">
 
-      <main class="flex-1 overflow-y-auto p-6">
-
-        <div class="max-w-3xl mx-auto space-y-6">
-
-          <!-- Branding -->
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
-              <i data-lucide="palette" class="w-5 h-5"></i> Branding
-            </h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Personaliza la apariencia de tu app</p>
-            <form id="form-branding" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre de la aplicacion</label>
-                <input id="cfg-nombre" type="text" class="input-base">
-              </div>
-              <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Eslogan</label>
-                <input id="cfg-eslogan" type="text" class="input-base">
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Empresa</label>
-                <input id="cfg-empresa" type="text" class="input-base">
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email de contacto</label>
-                <input id="cfg-email" type="email" class="input-base">
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Color primario</label>
-                <input id="cfg-primario" type="color" class="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-600 cursor-pointer">
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Color secundario</label>
-                <input id="cfg-secundario" type="color" class="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-600 cursor-pointer">
-              </div>
-              <div class="md:col-span-2 flex justify-end gap-2 pt-2">
-                <button type="button" id="btn-restaurar" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Restaurar</button>
-                <button type="submit" class="btn-gradient px-4 py-2 rounded-lg font-semibold">Guardar cambios</button>
-              </div>
-            </form>
-          </div>
-
-          <!-- Datos -->
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
-              <i data-lucide="database" class="w-5 h-5"></i> Datos del sistema
-            </h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Administra los datos almacenados en tu navegador</p>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50">
-                <div>
-                  <p class="font-medium text-slate-900 dark:text-white">Exportar datos</p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">Descarga un respaldo en JSON</p>
-                </div>
-                <button id="btn-exportar-json" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
-                  <i data-lucide="download" class="w-4 h-4"></i> Exportar
-                </button>
-              </div>
-              <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50">
-                <div>
-                  <p class="font-medium text-slate-900 dark:text-white">Importar datos</p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">Restaura desde un archivo JSON</p>
-                </div>
-                <label class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2 cursor-pointer">
-                  <i data-lucide="upload" class="w-4 h-4"></i> Importar
-                  <input id="file-importar" type="file" accept=".json" class="hidden">
-                </label>
-              </div>
-              <div class="flex items-center justify-between p-3 rounded-lg bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-900/30">
-                <div>
-                  <p class="font-medium text-rose-900 dark:text-rose-300">Borrar todo</p>
-                  <p class="text-xs text-rose-700 dark:text-rose-400">Elimina todos los clientes y configuraciones</p>
-                </div>
-                <button id="btn-reset" class="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white flex items-center gap-2">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i> Borrar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sistema -->
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
-              <i data-lucide="info" class="w-5 h-5"></i> Informacion del sistema
-            </h3>
-            <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
-              <div>
-                <p class="text-slate-500 dark:text-slate-400">Version</p>
-                <p class="font-medium text-slate-900 dark:text-white" data-app-version>—</p>
-              </div>
-              <div>
-                <p class="text-slate-500 dark:text-slate-400">Empresa</p>
-                <p class="font-medium text-slate-900 dark:text-white" data-app-empresa>—</p>
-              </div>
-              <div>
-                <p class="text-slate-500 dark:text-slate-400">Almacenamiento</p>
-                <p id="info-storage" class="font-medium text-slate-900 dark:text-white">—</p>
-              </div>
-              <div>
-                <p class="text-slate-500 dark:text-slate-400">Modo</p>
-                <p class="font-medium text-slate-900 dark:text-white">localStorage</p>
-              </div>
-            </div>
-          </div>
-
+    <!-- HEADER -->
+    <header class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 px-5 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300">
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </a>
+        <div>
+          <h1 class="text-xl font-bold text-slate-900 dark:text-white">Configuracion</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Personaliza el sistema DINET</p>
         </div>
+      </div>
+      <button id="btn-tema" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+        <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+        <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+      </button>
+    </header>
 
-      </main>
+    <!-- BRANDING -->
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+      <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+        <i data-lucide="palette" class="w-5 h-5"></i> Branding
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Personaliza el nombre y colores del sistema</p>
+      <form id="form-branding" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre del sistema</label>
+          <input id="cfg-nombre" type="text" class="input-base">
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Subtitulo</label>
+          <input id="cfg-subtitulo" type="text" class="input-base">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Empresa</label>
+          <input id="cfg-empresa" type="text" class="input-base">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Refresco EN VIVO (segundos)</label>
+          <input id="cfg-refresco" type="number" min="5" max="600" class="input-base">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Color primario</label>
+          <input id="cfg-primario" type="color" class="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-600 cursor-pointer">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Color secundario</label>
+          <input id="cfg-secundario" type="color" class="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-600 cursor-pointer">
+        </div>
+        <div class="md:col-span-2 flex justify-end gap-2 pt-2">
+          <button type="button" id="btn-restaurar" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Restaurar</button>
+          <button type="submit" class="btn-gradient px-4 py-2 rounded-lg font-semibold">Guardar cambios</button>
+        </div>
+      </form>
     </div>
+
+    <!-- DATOS -->
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+      <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+        <i data-lucide="database" class="w-5 h-5"></i> Datos
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Administra los embarques cargados</p>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50">
+          <div>
+            <p class="font-medium text-slate-900 dark:text-white">Origen actual</p>
+            <p id="info-origen" class="text-xs text-slate-500 dark:text-slate-400">—</p>
+          </div>
+          <span id="badge-origen" class="px-3 py-1 rounded-full text-xs font-semibold">—</span>
+        </div>
+        <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50">
+          <div>
+            <p class="font-medium text-slate-900 dark:text-white">Total registros</p>
+            <p id="info-total" class="text-xs text-slate-500 dark:text-slate-400">—</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/30">
+          <div>
+            <p class="font-medium text-amber-900 dark:text-amber-300">Recargar datos demo</p>
+            <p class="text-xs text-amber-700 dark:text-amber-400">Vuelve a generar los 60 registros de ejemplo</p>
+          </div>
+          <button id="btn-demo" class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm">Regenerar</button>
+        </div>
+        <div class="flex items-center justify-between p-3 rounded-lg bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-900/30">
+          <div>
+            <p class="font-medium text-rose-900 dark:text-rose-300">Borrar todo</p>
+            <p class="text-xs text-rose-700 dark:text-rose-400">Elimina embarques, sesion y configuracion</p>
+          </div>
+          <button id="btn-reset" class="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm flex items-center gap-2">
+            <i data-lucide="trash-2" class="w-4 h-4"></i> Borrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO SISTEMA -->
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+      <h3 class="font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+        <i data-lucide="info" class="w-5 h-5"></i> Sistema
+      </h3>
+      <div class="grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <p class="text-slate-500 dark:text-slate-400">Version</p>
+          <p class="font-medium text-slate-900 dark:text-white" data-app-version>—</p>
+        </div>
+        <div>
+          <p class="text-slate-500 dark:text-slate-400">Empresa</p>
+          <p class="font-medium text-slate-900 dark:text-white" data-app-empresa>—</p>
+        </div>
+        <div>
+          <p class="text-slate-500 dark:text-slate-400">Almacenamiento</p>
+          <p id="info-storage" class="font-medium text-slate-900 dark:text-white">—</p>
+        </div>
+        <div>
+          <p class="text-slate-500 dark:text-slate-400">Modo</p>
+          <p class="font-medium text-slate-900 dark:text-white">localStorage + Excel</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-xs text-slate-400 py-2">
+      © <span data-app-anio>2025</span> <span data-app-empresa>DINET S.A</span> · <span data-app-version>v</span>
+    </p>
   </div>
 
   <script src="js/config.js"></script>
   <script src="js/data.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/utils.js"></script>
-  <script src="js/sidebar.js"></script>
-  <script src="js/configuracion.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!Auth.requireAuth()) return;
+      lucide.createIcons();
+      cargarValores();
+      mostrarInfo();
+      configurarEventos();
+    });
+
+    const CFG_KEY = "dinet_config_user";
+
+    function cargarValores() {
+      const saved = JSON.parse(localStorage.getItem(CFG_KEY) || "{}");
+      document.getElementById("cfg-nombre").value     = saved.nombre     ?? APP_CONFIG.nombre;
+      document.getElementById("cfg-subtitulo").value  = saved.subtitulo  ?? APP_CONFIG.subtitulo;
+      document.getElementById("cfg-empresa").value    = saved.empresa    ?? APP_CONFIG.empresa;
+      document.getElementById("cfg-refresco").value   = saved.refrescoSegundos ?? APP_CONFIG.refrescoSegundos;
+      document.getElementById("cfg-primario").value   = saved.colorPrimario   ?? APP_CONFIG.colorPrimario;
+      document.getElementById("cfg-secundario").value = saved.colorSecundario ?? APP_CONFIG.colorSecundario;
+    }
+
+    function mostrarInfo() {
+      const meta = DataStore.getMeta();
+      const total = DataStore.getEmbarques().length;
+      document.getElementById("info-origen").textContent = `${meta.archivo} · ${meta.hoja}`;
+      document.getElementById("info-total").textContent = `${total} embarques registrados`;
+
+      const badge = document.getElementById("badge-origen");
+      if (meta.origen === "excel") {
+        badge.textContent = "EXCEL CARGADO";
+        badge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300";
+      } else {
+        badge.textContent = "DATOS DEMO";
+        badge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300";
+      }
+
+      let total2 = 0;
+      for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) total2 += (localStorage[key].length + key.length) * 2;
+      }
+      document.getElementById("info-storage").textContent = (total2 / 1024).toFixed(2) + " KB";
+    }
+
+    function configurarEventos() {
+      document.getElementById("btn-tema").onclick = () => Utils.toggleDarkMode();
+
+      document.getElementById("form-branding").onsubmit = (e) => {
+        e.preventDefault();
+        const cfg = {
+          nombre: document.getElementById("cfg-nombre").value.trim(),
+          subtitulo: document.getElementById("cfg-subtitulo").value.trim(),
+          empresa: document.getElementById("cfg-empresa").value.trim(),
+          refrescoSegundos: parseInt(document.getElementById("cfg-refresco").value) || 30,
+          colorPrimario: document.getElementById("cfg-primario").value,
+          colorSecundario: document.getElementById("cfg-secundario").value
+        };
+        localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+        Object.assign(APP_CONFIG, cfg);
+        document.documentElement.style.setProperty("--color-primario", cfg.colorPrimario);
+        document.documentElement.style.setProperty("--color-secundario", cfg.colorSecundario);
+        Utils.toast("Configuracion guardada", "success");
+      };
+
+      document.getElementById("btn-restaurar").onclick = () => {
+        Utils.confirmar("¿Restaurar valores por defecto?", () => {
+          localStorage.removeItem(CFG_KEY);
+          location.reload();
+        });
+      };
+
+      document.getElementById("btn-demo").onclick = () => {
+        Utils.confirmar("Esto reemplazara los datos actuales con los de ejemplo. ¿Continuar?", () => {
+          DataStore.resetEmbarques();
+          DataStore.getEmbarques(); // regenera
+          Utils.toast("Datos demo regenerados", "success");
+          setTimeout(() => location.reload(), 600);
+        });
+      };
+
+      document.getElementById("btn-reset").onclick = () => {
+        Utils.confirmar("Se borrara TODO. ¿Continuar?", () => {
+          DataStore.resetAll();
+          localStorage.removeItem(CFG_KEY);
+          Utils.toast("Datos borrados", "success");
+          setTimeout(() => window.location.href = "index.html", 800);
+        });
+      };
+    }
+  </script>
 </body>
 </html>

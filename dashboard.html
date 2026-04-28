@@ -3,136 +3,259 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard — ClientesHumanIA</title>
+  <title>DINET · Estatus Picking Unilever</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <script>tailwind.config = { darkMode: "class" };</script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 min-h-screen">
+<body class="bg-slate-100 dark:bg-slate-900 min-h-screen">
 
-  <div class="flex h-screen overflow-hidden">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col"></aside>
+  <!-- Banda decorativa superior -->
+  <div class="h-1.5 bg-gradient-to-r from-rose-500 via-amber-500 via-emerald-500 to-sky-500"></div>
 
-    <!-- Contenido -->
-    <div class="flex-1 flex flex-col overflow-hidden">
-      <header id="topbar" class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4"></header>
+  <div class="max-w-[1600px] mx-auto p-4 lg:p-6 space-y-4">
 
-      <main class="flex-1 overflow-y-auto p-6">
-
-        <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-
-          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-start justify-between">
-              <div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Total Clientes</p>
-                <p id="kpi-total" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-                <p class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
-                  <i data-lucide="trending-up" class="w-3 h-3"></i> +12% vs mes anterior
-                </p>
-              </div>
-              <div class="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-lg">
-                <i data-lucide="users" class="w-6 h-6 text-indigo-600 dark:text-indigo-400"></i>
-              </div>
-            </div>
+    <!-- HEADER -->
+    <header class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 px-5 py-4">
+      <div class="flex items-start justify-between flex-wrap gap-3">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-slate-900 dark:bg-slate-700 text-white flex items-center justify-center font-bold text-xl">
+            D
           </div>
-
-          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-start justify-between">
-              <div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Clientes Activos</p>
-                <p id="kpi-activos" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-                <p class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
-                  <i data-lucide="check-circle" class="w-3 h-3"></i> En seguimiento
-                </p>
-              </div>
-              <div class="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-lg">
-                <i data-lucide="user-check" class="w-6 h-6 text-emerald-600 dark:text-emerald-400"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-start justify-between">
-              <div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Ingresos Totales</p>
-                <p id="kpi-monto" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">S/ 0</p>
-                <p class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
-                  <i data-lucide="trending-up" class="w-3 h-3"></i> +8.5%
-                </p>
-              </div>
-              <div class="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg">
-                <i data-lucide="dollar-sign" class="w-6 h-6 text-amber-600 dark:text-amber-400"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-start justify-between">
-              <div>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Pendientes</p>
-                <p id="kpi-pendientes" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-                <p class="text-xs text-amber-600 mt-2 flex items-center gap-1">
-                  <i data-lucide="clock" class="w-3 h-3"></i> Por contactar
-                </p>
-              </div>
-              <div class="bg-rose-100 dark:bg-rose-900/30 p-3 rounded-lg">
-                <i data-lucide="alert-circle" class="w-6 h-6 text-rose-600 dark:text-rose-400"></i>
-              </div>
-            </div>
+          <div>
+            <h1 class="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span data-app-nombre>DINET</span>
+              <span class="text-slate-400">·</span>
+              <span data-app-subtitulo>Estatus Picking Unilever</span>
+            </h1>
+            <p id="meta-base" class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              Cargando datos...
+            </p>
           </div>
         </div>
+        <div class="flex items-center gap-2">
+          <label for="input-excel" class="cursor-pointer btn-gradient px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 shadow-md">
+            <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+            Cargar base Excel
+          </label>
+          <input id="input-excel" type="file" accept=".xlsx,.xls" class="hidden">
 
-        <!-- Gráficos -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-
-          <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h3 class="font-semibold text-slate-900 dark:text-white">Clientes registrados</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Ultimos 6 meses</p>
-              </div>
-              <select class="input-base text-sm" style="width: auto;">
-                <option>Mensual</option>
-                <option>Semanal</option>
-              </select>
-            </div>
-            <canvas id="grafico-linea" height="80"></canvas>
+          <div id="indicador-vivo" class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800">
+            <span class="relative flex w-2.5 h-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300">EN VIVO</span>
           </div>
 
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <h3 class="font-semibold text-slate-900 dark:text-white mb-4">Distribucion por estado</h3>
-            <canvas id="grafico-dona"></canvas>
-            <div id="leyenda-dona" class="mt-4 space-y-2"></div>
+          <button id="btn-tema" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700" title="Cambiar tema">
+            <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          </button>
+
+          <a href="configuracion.html" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700" title="Configuracion">
+            <i data-lucide="settings" class="w-4 h-4"></i>
+          </a>
+
+          <button id="btn-salir" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-900/30 hover:text-rose-600 border border-slate-200 dark:border-slate-700" title="Cerrar sesion">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- TABS Y FILTROS -->
+      <div class="mt-5 flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-700">
+        <div id="tabs" class="flex gap-1">
+          <button data-tab="TODOS" class="tab-btn flex items-center gap-2 px-4 py-3 border-b-2 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+            <span class="font-semibold text-sm">TODOS</span>
+            <span class="tab-count text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">0</span>
+          </button>
+          <button data-tab="LOCAL" class="tab-btn flex items-center gap-2 px-4 py-3 border-b-2 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="font-semibold text-sm">LOCAL</span>
+            <span class="tab-count text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">0</span>
+          </button>
+          <button data-tab="PROVINCIA" class="tab-btn flex items-center gap-2 px-4 py-3 border-b-2 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span class="font-semibold text-sm">PROVINCIA</span>
+            <span class="tab-count text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">0</span>
+          </button>
+          <button data-tab="COPACKERS" class="tab-btn flex items-center gap-2 px-4 py-3 border-b-2 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+            <span class="font-semibold text-sm">COPACKERS</span>
+            <span class="tab-count text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTROS TEMPORALES -->
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <span class="text-xs uppercase font-semibold text-slate-500 dark:text-slate-400 tracking-wider">Filtros temporales:</span>
+
+        <select id="filtro-dia" class="select-pill"></select>
+        <select id="filtro-turno" class="select-pill">
+          <option value="">Todos los turnos</option>
+          <option>T1</option>
+          <option>T2</option>
+          <option>T3</option>
+        </select>
+        <select id="filtro-transporte" class="select-pill">
+          <option value="">Todos los transportes</option>
+        </select>
+
+        <div class="ml-auto relative">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input id="buscador" type="text" placeholder="Buscar destino o DT..." class="input-base pl-10 pr-3 py-2 text-sm rounded-full" style="min-width: 240px;">
+        </div>
+      </div>
+    </header>
+
+    <!-- FILA: GAUGES Y RESUMEN -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+      <!-- GAUGE PIKING -->
+      <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+        <h3 id="titulo-piking" class="text-xs uppercase font-bold tracking-widest text-slate-500 dark:text-slate-400 text-center">PIKING</h3>
+        <div class="relative mt-2">
+          <canvas id="gauge-piking" height="170"></canvas>
+          <div class="absolute inset-0 flex flex-col items-center justify-end pb-2 pointer-events-none">
+            <p id="gauge-piking-valor" class="text-4xl font-extrabold text-slate-900 dark:text-white">0%</p>
+            <p id="gauge-piking-detalle" class="text-xs text-slate-500 dark:text-slate-400 mt-1">0 / 0 Cjs</p>
           </div>
         </div>
+      </div>
 
-        <!-- Actividad reciente y top ciudades -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- RESUMEN OPERATIVO -->
+      <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 flex flex-col">
+        <h3 class="text-xs uppercase font-bold tracking-widest text-slate-500 dark:text-slate-400">Resumen operativo</h3>
 
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-semibold text-slate-900 dark:text-white">Actividad reciente</h3>
-              <i data-lucide="activity" class="w-5 h-5 text-slate-400"></i>
-            </div>
-            <div id="lista-actividad" class="space-y-3 max-h-80 overflow-y-auto"></div>
-          </div>
-
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-semibold text-slate-900 dark:text-white">Top ciudades</h3>
-              <i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i>
-            </div>
-            <canvas id="grafico-barras" height="120"></canvas>
-          </div>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-xs uppercase text-slate-400 dark:text-slate-500">
+                <th class="text-left font-medium py-1.5"></th>
+                <th class="text-right font-medium py-1.5">Ton</th>
+                <th class="text-right font-medium py-1.5">M³</th>
+                <th class="text-right font-medium py-1.5">Cajas</th>
+              </tr>
+            </thead>
+            <tbody id="resumen-tabla" class="divide-y divide-slate-100 dark:divide-slate-700">
+              <tr><td class="py-2 text-slate-700 dark:text-slate-300 font-medium">TOTAL</td>          <td class="text-right py-2" id="r-total-ton">—</td><td class="text-right py-2" id="r-total-m3">—</td><td class="text-right py-2" id="r-total-cj">—</td></tr>
+              <tr><td class="py-2 text-emerald-600 dark:text-emerald-400 font-medium">AVANCE PIKING</td><td class="text-right py-2 text-emerald-600 font-semibold" id="r-avance-ton">—</td><td class="text-right py-2 text-emerald-600 font-semibold" id="r-avance-m3">—</td><td class="text-right py-2 text-emerald-600 font-semibold" id="r-avance-cj">—</td></tr>
+              <tr><td class="py-2 text-rose-600 dark:text-rose-400 font-medium">PENDIENTE PIKING</td>   <td class="text-right py-2 text-rose-600 font-semibold" id="r-pend-ton">—</td><td class="text-right py-2 text-rose-600 font-semibold" id="r-pend-m3">—</td><td class="text-right py-2 text-rose-600 font-semibold" id="r-pend-cj">—</td></tr>
+              <tr><td class="py-2 text-sky-600 dark:text-sky-400 font-medium">AVANCE DESPACHO</td>      <td class="text-right py-2 text-sky-600 font-semibold" id="r-desp-ton">—</td><td class="text-right py-2 text-sky-600 font-semibold" id="r-desp-m3">—</td><td class="text-right py-2 text-sky-600 font-semibold" id="r-desp-cj">—</td></tr>
+            </tbody>
+          </table>
         </div>
 
-      </main>
+        <!-- AVANCE POR TURNO -->
+        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300">Avance por turno</h4>
+            <span class="text-xs text-slate-400">Toneladas · m³ · Cajas procesadas por turno.</span>
+          </div>
+          <div id="turnos-bars" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- GAUGE DESPACHO -->
+      <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-5">
+        <h3 class="text-xs uppercase font-bold tracking-widest text-slate-500 dark:text-slate-400 text-center">Despacho</h3>
+        <div class="relative mt-2">
+          <canvas id="gauge-despacho" height="170"></canvas>
+          <div class="absolute inset-0 flex flex-col items-center justify-end pb-2 pointer-events-none">
+            <p id="gauge-despacho-valor" class="text-4xl font-extrabold text-slate-900 dark:text-white">0%</p>
+            <p id="gauge-despacho-detalle" class="text-xs text-slate-500 dark:text-slate-400 mt-1">0 cjs cargadas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETALLE PRIORIZADO -->
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+
+      <!-- header tabla -->
+      <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between flex-wrap gap-3">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Detalle priorizado</h3>
+        <div class="flex flex-wrap gap-2 items-center">
+          <button data-estado="TODOS" class="estado-btn flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+            TODOS
+            <span class="estado-count px-2 py-0.5 rounded-full bg-white/30 text-[10px]">0</span>
+          </button>
+          <button data-estado="COMPLETO" class="estado-btn flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            COMPLETO
+            <span class="estado-count px-2 py-0.5 rounded-full bg-white/30 text-[10px]">0</span>
+          </button>
+          <button data-estado="EN_PROCESO" class="estado-btn flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            EN PROCESO
+            <span class="estado-count px-2 py-0.5 rounded-full bg-white/30 text-[10px]">0</span>
+          </button>
+          <button data-estado="PENDIENTE" class="estado-btn flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all">
+            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+            PENDIENTE
+            <span class="estado-count px-2 py-0.5 rounded-full bg-white/30 text-[10px]">0</span>
+          </button>
+          <button id="btn-exportar" class="ml-2 flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-semibold">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Exportar
+          </button>
+        </div>
+      </div>
+
+      <!-- tabla -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50 dark:bg-slate-900/40 text-xs uppercase text-slate-500 dark:text-slate-400">
+            <tr>
+              <th class="text-left font-semibold px-4 py-3"># DT</th>
+              <th class="text-left font-semibold px-4 py-3">Transporte</th>
+              <th class="text-left font-semibold px-4 py-3">Cliente</th>
+              <th class="text-left font-semibold px-4 py-3">Destino</th>
+              <th class="text-right font-semibold px-4 py-3">Ton</th>
+              <th class="text-right font-semibold px-4 py-3">M³</th>
+              <th class="text-right font-semibold px-4 py-3">Pedido</th>
+              <th class="text-right font-semibold px-4 py-3">Avance</th>
+              <th class="text-left font-semibold px-4 py-3">Placa</th>
+              <th class="text-left font-semibold px-4 py-3">Hora</th>
+              <th class="text-left font-semibold px-4 py-3">% Avance</th>
+              <th class="text-center font-semibold px-4 py-3">Estado carga</th>
+              <th class="text-left font-semibold px-4 py-3">Rampa</th>
+              <th class="text-left font-semibold px-4 py-3">Stage</th>
+              <th class="text-left font-semibold px-4 py-3">Cita</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-detalle" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+        </table>
+      </div>
+
+      <!-- footer / paginacion -->
+      <div id="footer-tabla" class="px-5 py-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-sm text-slate-600 dark:text-slate-400 flex-wrap gap-2"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center text-xs text-slate-400 py-4">
+      © <span data-app-anio>2025</span> <span data-app-empresa>DINET S.A</span> · <span data-app-version>v</span> · Sistema de monitoreo de embarques
+    </footer>
+  </div>
+
+  <!-- MODAL DETALLE DT -->
+  <div id="modal-detalle" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-xl max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between sticky top-0 bg-white dark:bg-slate-800 z-10">
+        <h3 id="modal-titulo" class="text-lg font-semibold text-slate-900 dark:text-white">Detalle DT</h3>
+        <button id="cerrar-modal" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="modal-contenido" class="p-6"></div>
     </div>
   </div>
 
@@ -140,7 +263,6 @@
   <script src="js/data.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/utils.js"></script>
-  <script src="js/sidebar.js"></script>
-  <script src="js/dashboard.js"></script>
+  <script src="js/dinet.js"></script>
 </body>
 </html>
