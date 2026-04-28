@@ -1,19 +1,19 @@
 @echo off
 chcp 65001 > nul
-title Instalador - Dashboard V2 ClientesHumanIA
+title Instalador - DINET Estatus Picking Unilever
 color 0B
 
 echo.
 echo  =============================================================
-echo                    DASHBOARD V2 - ClientesHumanIA
-echo                          Instalador automatico
+echo               DINET - ESTATUS PICKING UNILEVER
+echo                     Instalador automatico
 echo  =============================================================
 echo.
 
 set "REPO_URL=https://github.com/HumanIA12/ClientesHumanIA/archive/refs/heads/claude/review-dashboard-v2-gKJdU.zip"
-set "DEST=%USERPROFILE%\Desktop\Dashboard-V2"
-set "ZIP=%TEMP%\dashboard-v2.zip"
-set "TMP_EXTRACT=%TEMP%\dashboard-v2-extract"
+set "DEST=%USERPROFILE%\Desktop\DINET-Dashboard"
+set "ZIP=%TEMP%\dinet-dashboard.zip"
+set "TMP_EXTRACT=%TEMP%\dinet-dashboard-extract"
 
 echo  [1/4] Descargando proyecto desde GitHub...
 echo.
@@ -29,7 +29,7 @@ if errorlevel 1 goto error
 echo  [3/4] Instalando en el escritorio...
 echo.
 if exist "%DEST%" (
-    echo  La carpeta Dashboard-V2 ya existe en tu escritorio.
+    echo  La carpeta DINET-Dashboard ya existe en tu escritorio.
     set /p OVERWRITE="  Deseas sobrescribirla? (s/n): "
     if /i not "%OVERWRITE%"=="s" goto cancelado
     rmdir /s /q "%DEST%"
@@ -52,8 +52,11 @@ echo.
 echo    Ubicacion:  %DEST%
 echo.
 echo    Credenciales de prueba:
-echo      Usuario:  admin       Password: admin123
-echo      Usuario:  vendedor    Password: vendedor123
+echo      Usuario:  admin        Password: admin123
+echo      Usuario:  operador     Password: operador123
+echo.
+echo    Una vez dentro, usa el boton "Cargar base Excel"
+echo    para subir tu archivo dinet_embarques_data.xlsx
 echo.
 echo    El navegador se abrira automaticamente en 3 segundos...
 echo.
@@ -61,7 +64,7 @@ echo.
 timeout /t 3 /nobreak > nul
 start "" "%DEST%\index.html"
 
-echo  Listo! Disfruta tu Dashboard V2.
+echo  Listo! Disfruta tu Dashboard DINET.
 echo.
 pause
 exit /b 0
