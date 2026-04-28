@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuracion — ClientesHumanIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>tailwind.config = { darkMode: "class" };</script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen">
+
+  <div class="flex h-screen overflow-hidden">
+    <aside id="sidebar" class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col"></aside>
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <header id="topbar" class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4"></header>
+
+      <main class="flex-1 overflow-y-auto p-6">
+
+        <div class="max-w-3xl mx-auto space-y-6">
+
+          <!-- Branding -->
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+              <i data-lucide="palette" class="w-5 h-5"></i> Branding
+            </h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Personaliza la apariencia de tu app</p>
+            <form id="form-branding" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre de la aplicacion</label>
+                <input id="cfg-nombre" type="text" class="input-base">
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Eslogan</label>
+                <input id="cfg-eslogan" type="text" class="input-base">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Empresa</label>
+                <input id="cfg-empresa" type="text" class="input-base">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email de contacto</label>
+                <input id="cfg-email" type="email" class="input-base">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Color primario</label>
+                <input id="cfg-primario" type="color" class="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-600 cursor-pointer">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Color secundario</label>
+                <input id="cfg-secundario" type="color" class="w-full h-10 rounded-lg border border-slate-300 dark:border-slate-600 cursor-pointer">
+              </div>
+              <div class="md:col-span-2 flex justify-end gap-2 pt-2">
+                <button type="button" id="btn-restaurar" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Restaurar</button>
+                <button type="submit" class="btn-gradient px-4 py-2 rounded-lg font-semibold">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Datos -->
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+              <i data-lucide="database" class="w-5 h-5"></i> Datos del sistema
+            </h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Administra los datos almacenados en tu navegador</p>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50">
+                <div>
+                  <p class="font-medium text-slate-900 dark:text-white">Exportar datos</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Descarga un respaldo en JSON</p>
+                </div>
+                <button id="btn-exportar-json" class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
+                  <i data-lucide="download" class="w-4 h-4"></i> Exportar
+                </button>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50">
+                <div>
+                  <p class="font-medium text-slate-900 dark:text-white">Importar datos</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">Restaura desde un archivo JSON</p>
+                </div>
+                <label class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2 cursor-pointer">
+                  <i data-lucide="upload" class="w-4 h-4"></i> Importar
+                  <input id="file-importar" type="file" accept=".json" class="hidden">
+                </label>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-lg bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-900/30">
+                <div>
+                  <p class="font-medium text-rose-900 dark:text-rose-300">Borrar todo</p>
+                  <p class="text-xs text-rose-700 dark:text-rose-400">Elimina todos los clientes y configuraciones</p>
+                </div>
+                <button id="btn-reset" class="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white flex items-center gap-2">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i> Borrar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sistema -->
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+              <i data-lucide="info" class="w-5 h-5"></i> Informacion del sistema
+            </h3>
+            <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+              <div>
+                <p class="text-slate-500 dark:text-slate-400">Version</p>
+                <p class="font-medium text-slate-900 dark:text-white" data-app-version>—</p>
+              </div>
+              <div>
+                <p class="text-slate-500 dark:text-slate-400">Empresa</p>
+                <p class="font-medium text-slate-900 dark:text-white" data-app-empresa>—</p>
+              </div>
+              <div>
+                <p class="text-slate-500 dark:text-slate-400">Almacenamiento</p>
+                <p id="info-storage" class="font-medium text-slate-900 dark:text-white">—</p>
+              </div>
+              <div>
+                <p class="text-slate-500 dark:text-slate-400">Modo</p>
+                <p class="font-medium text-slate-900 dark:text-white">localStorage</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/configuracion.js"></script>
+</body>
+</html>

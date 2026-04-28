@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — ClientesHumanIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>tailwind.config = { darkMode: "class" };</script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 min-h-screen">
+
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col"></aside>
+
+    <!-- Contenido -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <header id="topbar" class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4"></header>
+
+      <main class="flex-1 overflow-y-auto p-6">
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Total Clientes</p>
+                <p id="kpi-total" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+                <p class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
+                  <i data-lucide="trending-up" class="w-3 h-3"></i> +12% vs mes anterior
+                </p>
+              </div>
+              <div class="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-lg">
+                <i data-lucide="users" class="w-6 h-6 text-indigo-600 dark:text-indigo-400"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Clientes Activos</p>
+                <p id="kpi-activos" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+                <p class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
+                  <i data-lucide="check-circle" class="w-3 h-3"></i> En seguimiento
+                </p>
+              </div>
+              <div class="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-lg">
+                <i data-lucide="user-check" class="w-6 h-6 text-emerald-600 dark:text-emerald-400"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Ingresos Totales</p>
+                <p id="kpi-monto" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">S/ 0</p>
+                <p class="text-xs text-emerald-600 mt-2 flex items-center gap-1">
+                  <i data-lucide="trending-up" class="w-3 h-3"></i> +8.5%
+                </p>
+              </div>
+              <div class="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg">
+                <i data-lucide="dollar-sign" class="w-6 h-6 text-amber-600 dark:text-amber-400"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-hover bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Pendientes</p>
+                <p id="kpi-pendientes" class="text-3xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+                <p class="text-xs text-amber-600 mt-2 flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3"></i> Por contactar
+                </p>
+              </div>
+              <div class="bg-rose-100 dark:bg-rose-900/30 p-3 rounded-lg">
+                <i data-lucide="alert-circle" class="w-6 h-6 text-rose-600 dark:text-rose-400"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+
+          <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-white">Clientes registrados</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Ultimos 6 meses</p>
+              </div>
+              <select class="input-base text-sm" style="width: auto;">
+                <option>Mensual</option>
+                <option>Semanal</option>
+              </select>
+            </div>
+            <canvas id="grafico-linea" height="80"></canvas>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-4">Distribucion por estado</h3>
+            <canvas id="grafico-dona"></canvas>
+            <div id="leyenda-dona" class="mt-4 space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- Actividad reciente y top ciudades -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-slate-900 dark:text-white">Actividad reciente</h3>
+              <i data-lucide="activity" class="w-5 h-5 text-slate-400"></i>
+            </div>
+            <div id="lista-actividad" class="space-y-3 max-h-80 overflow-y-auto"></div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-slate-900 dark:text-white">Top ciudades</h3>
+              <i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i>
+            </div>
+            <canvas id="grafico-barras" height="120"></canvas>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
