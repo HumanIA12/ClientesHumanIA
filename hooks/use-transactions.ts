@@ -167,6 +167,56 @@ export function useCreateTransaction() {
   })
 }
 
+import { useQuery } from '@tanstack/react-query'
+
+export function useTransactionQuery(id: string | undefined) {
+  const supabase = createClient()
+  return useQuery({
+    queryKey: ['transactions', 'one', id ?? 'none'],
+    enabled: !!id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('id', id!)
+        .is('deleted_at', null)
+        .single()
+      if (error) throw error
+      return data
+    },
+  })
+}
+
+export function useUpdateTransaction() {
+  const supabase = createClient()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({
+      id,
+      patch,
+    }: {
+      id: string
+      patch: Partial<TransactionInsert>
+    }) => {
+      const { data, error } = await supabase
+        .from('transactions')
+        .update(patch)
+        .eq('id', id)
+        .select()
+        .single()
+      if (error) throw error
+      return data
+    },
+    onSuccess: (_data, vars) => {
+      void queryClient.invalidateQueries({ queryKey: qk.transactions() })
+      void queryClient.invalidateQueries({ queryKey: qk.accounts() })
+      void queryClient.invalidateQueries({
+        queryKey: ['transactions', 'one', vars.id],
+      })
+    },
+  })
+}
+
 export function useDeleteTransaction() {
   const supabase = createClient()
   const queryClient = useQueryClient()

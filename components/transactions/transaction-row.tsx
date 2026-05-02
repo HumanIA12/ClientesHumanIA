@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import type { Transaction } from '@/hooks/use-transactions'
@@ -19,6 +20,8 @@ export interface TransactionRowProps {
   performer?: HouseholdMember
   /** Si true, muestra la fecha como prefijo (útil cuando la lista no agrupa por día). */
   showDate?: boolean
+  /** Si true, envuelve la fila en un Link al detalle del movimiento. */
+  asLink?: boolean
 }
 
 export function TransactionRow({
@@ -28,6 +31,7 @@ export function TransactionRow({
   category,
   performer,
   showDate,
+  asLink = true,
 }: TransactionRowProps) {
   const meta = TRANSACTION_TYPE_META[tx.type]
   const Icon = category
@@ -59,8 +63,17 @@ export function TransactionRow({
     subtitleParts.push(`→ ${targetAccount.name}`)
   if (performer) subtitleParts.push(performer.display_name)
 
+  const Wrapper = asLink ? Link : 'div'
+  const wrapperProps = asLink
+    ? {
+        href: `/movimientos/${tx.id}`,
+        className:
+          'flex items-center gap-3 rounded-lg border bg-card p-3 transition-colors hover:bg-muted/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+      }
+    : { className: 'flex items-center gap-3 rounded-lg border bg-card p-3' }
+
   return (
-    <div className="flex items-center gap-3 rounded-lg border bg-card p-3">
+    <Wrapper {...(wrapperProps as { href: string; className: string })}>
       <div
         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white"
         style={{ backgroundColor: iconColor }}
@@ -96,6 +109,6 @@ export function TransactionRow({
         {sign}
         {formatCurrency(Number(tx.amount), tx.currency)}
       </p>
-    </div>
+    </Wrapper>
   )
 }

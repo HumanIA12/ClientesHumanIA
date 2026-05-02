@@ -6,7 +6,11 @@ import { Loader2 } from 'lucide-react'
 import { useAccounts } from '@/hooks/use-accounts'
 import { useHouseholdMembers } from '@/hooks/use-household-members'
 import { useCategories } from '@/hooks/use-categories'
-import { useCreateTransaction } from '@/hooks/use-transactions'
+import {
+  useCreateTransaction,
+  useUpdateTransaction,
+  type Transaction,
+} from '@/hooks/use-transactions'
 import { TRANSACTION_TYPE_META } from '@/lib/transactions'
 import {
   ACCOUNT_TYPE_META,
@@ -44,28 +48,49 @@ export interface TransactionFormProps {
   onCreated?: () => void
   /** Tipo inicial. Default 'expense'. */
   defaultType?: TransactionType
+  /** Si se pasa, el formulario edita esta transacción en lugar de crear. */
+  transaction?: Transaction
 }
 
 export function TransactionForm({
   onCreated,
   defaultType = 'expense',
+  transaction,
 }: TransactionFormProps) {
   const router = useRouter()
   const { data: accounts } = useAccounts()
   const { data: members } = useHouseholdMembers()
   const { data: categories } = useCategories()
   const createTx = useCreateTransaction()
+  const updateTx = useUpdateTransaction()
+  const isEdit = !!transaction
 
-  const [type, setType] = useState<TransactionType>(defaultType)
-  const [amount, setAmount] = useState('0')
-  const [accountId, setAccountId] = useState<string>('')
-  const [targetAccountId, setTargetAccountId] = useState<string>('')
-  const [categoryId, setCategoryId] = useState<string | null>(null)
-  const [description, setDescription] = useState('')
-  const [notes, setNotes] = useState('')
-  const [performedAt, setPerformedAt] = useState<string>(todayISO())
-  const [performedBy, setPerformedBy] = useState<string | null>(null)
-  const [sharing, setSharing] = useState<Sharing>('shared')
+  const [type, setType] = useState<TransactionType>(
+    transaction?.type ?? defaultType
+  )
+  const [amount, setAmount] = useState(
+    transaction ? String(transaction.amount) : '0'
+  )
+  const [accountId, setAccountId] = useState<string>(
+    transaction?.account_id ?? ''
+  )
+  const [targetAccountId, setTargetAccountId] = useState<string>(
+    transaction?.target_account_id ?? ''
+  )
+  const [categoryId, setCategoryId] = useState<string | null>(
+    transaction?.category_id ?? null
+  )
+  const [description, setDescription] = useState(transaction?.description ?? '')
+  const [notes, setNotes] = useState(transaction?.notes ?? '')
+  const [performedAt, setPerformedAt] = useState<string>(
+    transaction
+      ? new Date(transaction.performed_at).toISOString().slice(0, 10)
+      : todayISO()
+  )
+  const [performedBy, setPerformedBy] = useState<string | null>(
+    transaction?.performed_by ?? null
+  )
+  const [sharing, setSharing] = useState<Sharing>(transaction?.sharing ?? 'shared')
   const [error, setError] = useState<string | null>(null)
 
   const liveAccounts = (accounts ?? []).filter(
@@ -109,31 +134,38 @@ export function TransactionForm({
       return
     }
     const d = parsed.data
+    const payload = {
+      type,
+      amount: d.amount,
+      account_id: d.account_id,
+      target_account_id:
+        'target_account_id' in d && d.target_account_id
+          ? d.target_account_id
+          : null,
+      category_id:
+        'category_id' in d && d.category_id ? d.category_id : null,
+      description: d.description || null,
+      notes: d.notes || null,
+      performed_at: new Date(d.performed_at).toISOString(),
+      performed_by: d.performed_by,
+      sharing: d.sharing,
+    }
     try {
-      await createTx.mutateAsync({
-        type,
-        amount: d.amount,
-        account_id: d.account_id,
-        target_account_id:
-          'target_account_id' in d && d.target_account_id
-            ? d.target_account_id
-            : null,
-        category_id:
-          'category_id' in d && d.category_id ? d.category_id : null,
-        description: d.description || null,
-        notes: d.notes || null,
-        performed_at: new Date(d.performed_at).toISOString(),
-        performed_by: d.performed_by,
-        sharing: d.sharing,
-      })
-      if (onCreated) onCreated()
-      else {
-        router.replace('/movimientos')
+      if (isEdit && transaction) {
+        await updateTx.mutateAsync({ id: transaction.id, patch: payload })
+        router.replace(`/movimientos/${transaction.id}`)
         router.refresh()
+      } else {
+        await createTx.mutateAsync(payload)
+        if (onCreated) onCreated()
+        else {
+          router.replace('/movimientos')
+          router.refresh()
+        }
       }
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : 'No se pudo crear el movimiento'
+        err instanceof Error ? err.message : 'No se pudo guardar el movimiento'
       )
     }
   }
@@ -313,15 +345,18 @@ export function TransactionForm({
           type="button"
           variant="outline"
           onClick={() => router.back()}
-          disabled={createTx.isPending}
+          disabled={createTx.isPending || updateTx.isPending}
         >
           Cancelar
         </Button>
-        <Button type="submit" disabled={createTx.isPending}>
-          {createTx.isPending && (
+        <Button
+          type="submit"
+          disabled={createTx.isPending || updateTx.isPending}
+        >
+          {(createTx.isPending || updateTx.isPending) && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Guardar
+          {isEdit ? 'Guardar cambios' : 'Guardar'}
         </Button>
       </div>
     </form>
