@@ -3,16 +3,10 @@
 import { Shield, Info } from 'lucide-react'
 import { useAccounts } from '@/hooks/use-accounts'
 import { useRecurringRules } from '@/hooks/use-recurring-rules'
+import { useHousehold } from '@/hooks/use-household'
 import { calculateSafeAvailableBreakdown } from '@/lib/utils/balance'
 import { formatCurrency } from '@/lib/utils/currency'
 import { Skeleton } from '@/components/ui/skeleton'
-
-export interface SafeAvailableWidgetProps {
-  /** Colchón mínimo configurable; por ahora se setea fijo desde el padre. */
-  buffer?: number
-  /** Moneda por defecto del household. */
-  currency?: string
-}
 
 /**
  * Widget hero del dashboard.
@@ -22,16 +16,17 @@ export interface SafeAvailableWidgetProps {
  * comprometer compromisos del mes (renta, suscripciones, mínimos de
  * tarjeta que aún no se han cobrado).
  */
-export function SafeAvailableWidget({
-  buffer = 0,
-  currency = 'MXN',
-}: SafeAvailableWidgetProps) {
+export function SafeAvailableWidget() {
   const { data: accounts, isLoading: loadingAccounts } = useAccounts()
   const { data: rules, isLoading: loadingRules } = useRecurringRules()
+  const { data: household } = useHousehold()
 
   if (loadingAccounts || loadingRules) {
     return <Skeleton className="h-44 w-full rounded-2xl" />
   }
+
+  const buffer = Number(household?.safe_buffer ?? 0)
+  const currency = household?.currency ?? 'MXN'
 
   const { liquid, upcoming, safe } = calculateSafeAvailableBreakdown({
     accounts: accounts ?? [],

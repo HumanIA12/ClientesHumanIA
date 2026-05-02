@@ -7,22 +7,31 @@ import type { Tables } from '@/lib/types/database'
 
 export type RecurringRule = Tables<'recurring_rules'>
 
+export interface UseRecurringRulesOptions {
+  /** Si true (default), excluye reglas pausadas. */
+  activeOnly?: boolean
+}
+
 /**
- * Lista las reglas recurrentes activas del household. Ordenadas por
- * next_run_date ascendente para que la UI las pueda usar tal cual en
- * "próximos pagos". RLS filtra por household.
+ * Lista las reglas recurrentes del household. Por defecto sólo
+ * activas (para usar en el dashboard); el CRUD puede pasar
+ * activeOnly=false para incluir pausadas. RLS filtra por household.
  */
-export function useRecurringRules(): UseQueryResult<RecurringRule[]> {
+export function useRecurringRules(
+  options: UseRecurringRulesOptions = {}
+): UseQueryResult<RecurringRule[]> {
+  const { activeOnly = true } = options
   const supabase = createClient()
   return useQuery({
-    queryKey: qk.recurringRules(),
+    queryKey: [...qk.recurringRules(), { activeOnly }],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from('recurring_rules')
         .select('*')
         .is('deleted_at', null)
-        .eq('is_active', true)
         .order('next_run_date', { ascending: true })
+      if (activeOnly) query = query.eq('is_active', true)
+      const { data, error } = await query
       if (error) throw error
       return data ?? []
     },

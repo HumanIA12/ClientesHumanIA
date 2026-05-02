@@ -13,17 +13,16 @@ export default function DashboardPage() {
       description="Resumen de tus finanzas en pareja"
     >
       <div className="grid gap-4 lg:grid-cols-3">
-        <SafeAvailableWidget />
+        <div className="lg:col-span-2"><SafeAvailableWidget /></div>
         <TotalBalanceWidget />
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <MonthSummaryWidget />
+        <CoupleBalanceWidget />
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <UpcomingPayments />
-        <CoupleBalanceWidget />
-      </div>
-
-      <div className="mt-4">
         <RecentTransactionsWidget />
       </div>
     </PageWrapper>

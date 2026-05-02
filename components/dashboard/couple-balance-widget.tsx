@@ -1,6 +1,6 @@
 'use client'
 
-import { Users, ArrowRight } from 'lucide-react'
+import { Users } from 'lucide-react'
 import { useMonthSummary } from '@/hooks/use-month-summary'
 import { useHouseholdMembers } from '@/hooks/use-household-members'
 import { formatCurrency } from '@/lib/utils/currency'
@@ -13,13 +13,12 @@ export interface CoupleBalanceWidgetProps {
 }
 
 /**
- * Balance básico del mes entre los 2 miembros de la pareja:
- * cuánto pagó cada uno en gastos compartidos y cuánto debería ajustar
- * para que ambos hayan aportado la mitad. Si la pareja decidió otro
- * reparto, este widget sólo es informativo.
+ * Quién pagó cuánto en gastos compartidos del mes.
  *
- * Asume household de 2 personas. Si hay más o menos, muestra los
- * totales sin la liquidación.
+ * Es informativo: NO asume que la pareja divide al 50/50. Si tienen
+ * una cuenta compartida que paga la mayoría de los gastos, ahí los
+ * pagos quedarán a nombre de quien registró el movimiento. Lo
+ * relevante es la transparencia, no la liquidación automática.
  */
 export function CoupleBalanceWidget({
   className,
@@ -32,27 +31,15 @@ export function CoupleBalanceWidget({
     return <Skeleton className={cn('h-44 w-full rounded-xl', className)} />
   }
 
-  const memberTotals = members.map((m) => ({
-    member: m,
-    paid: summary.sharedExpensesByPerson[m.id] ?? 0,
-  }))
+  const memberTotals = members
+    .map((m) => ({
+      member: m,
+      paid: summary.sharedExpensesByPerson[m.id] ?? 0,
+    }))
+    .sort((a, b) => b.paid - a.paid)
 
   const totalShared = summary.sharedExpenses
-  const fairShare = members.length > 0 ? totalShared / members.length : 0
-
-  // Liquidación entre 2: el que pagó menos le debe al otro la diferencia / 2.
-  const settle =
-    members.length === 2 && memberTotals[0] && memberTotals[1]
-      ? (() => {
-          const [a, b] = memberTotals
-          if (!a || !b) return null
-          if (a.paid === b.paid) return null
-          const diff = Math.abs(a.paid - b.paid) / 2
-          const debtor = a.paid < b.paid ? a.member : b.member
-          const creditor = a.paid < b.paid ? b.member : a.member
-          return { debtor, creditor, amount: diff }
-        })()
-      : null
+  const totalPersonal = summary.personalExpenses
 
   return (
     <section
@@ -61,72 +48,70 @@ export function CoupleBalanceWidget({
         className
       )}
     >
-      <div className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <div className="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
         <Users className="h-3.5 w-3.5" />
-        Balance de la pareja · este mes
+        Quién pagó qué · este mes
       </div>
-
-      <p className="text-sm text-muted-foreground">
-        Total compartido{' '}
-        <span className="font-semibold text-foreground">
-          {formatCurrency(totalShared, currency)}
-        </span>
+      <p className="mb-3 text-xs text-muted-foreground">
+        Sólo gastos marcados como compartidos. Sin reparto automático.
       </p>
 
-      <div className="mt-3 space-y-2">
-        {memberTotals.map(({ member, paid }) => {
-          const pct = totalShared > 0 ? (paid / totalShared) * 100 : 0
-          const delta = paid - fairShare
-          return (
-            <div key={member.id}>
-              <div className="flex items-baseline justify-between text-sm">
-                <span className="flex items-center gap-2 font-medium">
-                  <span
-                    aria-hidden
-                    className="inline-block h-2 w-2 rounded-full"
-                    style={{ backgroundColor: member.avatar_color }}
-                  />
-                  {member.display_name}
-                </span>
-                <span className="tabular-nums">
-                  {formatCurrency(paid, currency)}
-                </span>
-              </div>
-              <div
-                className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted"
-                aria-hidden
-              >
-                <div
-                  className="h-full rounded-full"
-                  style={{
-                    width: `${pct}%`,
-                    backgroundColor: member.avatar_color,
-                  }}
-                />
-              </div>
-              <p
-                className={cn(
-                  'mt-0.5 text-[11px]',
-                  delta >= 0 ? 'text-success' : 'text-muted-foreground'
-                )}
-              >
-                {delta >= 0
-                  ? `+${formatCurrency(Math.abs(delta), currency)} sobre la mitad`
-                  : `${formatCurrency(Math.abs(delta), currency)} bajo la mitad`}
-              </p>
-            </div>
-          )
-        })}
+      <div className="grid grid-cols-2 gap-3 text-sm">
+        <div>
+          <p className="text-xs text-muted-foreground">Compartido</p>
+          <p className="font-semibold tabular-nums">
+            {formatCurrency(totalShared, currency)}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-muted-foreground">Personal</p>
+          <p className="font-semibold tabular-nums">
+            {formatCurrency(totalPersonal, currency)}
+          </p>
+        </div>
       </div>
 
-      {settle && totalShared > 0 && (
-        <div className="mt-4 flex items-center gap-2 rounded-lg bg-muted/50 p-3 text-sm">
-          <span className="font-medium">{settle.debtor.display_name}</span>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-          <span className="font-medium">{settle.creditor.display_name}</span>
-          <span className="ml-auto tabular-nums font-semibold">
-            {formatCurrency(settle.amount, currency)}
-          </span>
+      {totalShared === 0 ? (
+        <p className="mt-4 rounded-lg border border-dashed bg-muted/30 p-4 text-center text-sm text-muted-foreground">
+          Sin gastos compartidos este mes.
+        </p>
+      ) : (
+        <div className="mt-4 space-y-3">
+          {memberTotals.map(({ member, paid }) => {
+            const pct = totalShared > 0 ? (paid / totalShared) * 100 : 0
+            return (
+              <div key={member.id}>
+                <div className="flex items-baseline justify-between text-sm">
+                  <span className="flex items-center gap-2 font-medium">
+                    <span
+                      aria-hidden
+                      className="inline-block h-2 w-2 rounded-full"
+                      style={{ backgroundColor: member.avatar_color }}
+                    />
+                    {member.display_name}
+                  </span>
+                  <span className="tabular-nums">
+                    {formatCurrency(paid, currency)}{' '}
+                    <span className="text-xs text-muted-foreground">
+                      ({pct.toFixed(0)}%)
+                    </span>
+                  </span>
+                </div>
+                <div
+                  className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted"
+                  aria-hidden
+                >
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${pct}%`,
+                      backgroundColor: member.avatar_color,
+                    }}
+                  />
+                </div>
+              </div>
+            )
+          })}
         </div>
       )}
     </section>
