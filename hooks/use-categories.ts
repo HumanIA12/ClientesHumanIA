@@ -42,6 +42,49 @@ export interface NewCategoryPayload {
   parent_id?: string | null
 }
 
+export function useUpdateCategory() {
+  const supabase = createClient()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({
+      id,
+      patch,
+    }: {
+      id: string
+      patch: Partial<CategoryInsert>
+    }) => {
+      const { data, error } = await supabase
+        .from('categories')
+        .update(patch)
+        .eq('id', id)
+        .select()
+        .single()
+      if (error) throw error
+      return data
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: qk.categories() })
+    },
+  })
+}
+
+export function useDeleteCategory() {
+  const supabase = createClient()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase
+        .from('categories')
+        .update({ deleted_at: new Date().toISOString() })
+        .eq('id', id)
+      if (error) throw error
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: qk.categories() })
+    },
+  })
+}
+
 export function useCreateCategory() {
   const supabase = createClient()
   const queryClient = useQueryClient()
