@@ -183,6 +183,89 @@ drop trigger if exists trg_tx_updated on public.transactions;
 create trigger trg_tx_updated before update on public.transactions
   for each row execute function public.set_updated_at();
 
+-- =====================================================================
+-- TRIGGER: mantener accounts.current_balance al insertar/actualizar/
+-- borrar (incluyendo soft delete vía deleted_at) transacciones.
+--
+-- Convención de signos:
+--   expense        : resta del account_id
+--   income         : suma al account_id
+--   transfer       : resta del account_id, suma al target_account_id
+--   credit_payment : resta del account_id (cuenta liquidadora),
+--                    suma al target_account_id (tarjeta liquidada).
+--                    Como el balance de credit_card representa deuda
+--                    en negativo, sumarle el pago lo acerca a 0.
+-- =====================================================================
+create or replace function public.apply_tx_to_balances(
+  p_type        transaction_type,
+  p_amount      numeric,
+  p_account_id  uuid,
+  p_target_id   uuid,
+  p_sign        int  -- +1 aplica, -1 revierte
+) returns void language plpgsql as $$
+declare
+  signed numeric := p_amount * p_sign;
+begin
+  if p_type = 'expense' then
+    update public.accounts
+       set current_balance = current_balance - signed
+     where id = p_account_id;
+  elsif p_type = 'income' then
+    update public.accounts
+       set current_balance = current_balance + signed
+     where id = p_account_id;
+  elsif p_type in ('transfer', 'credit_payment') then
+    update public.accounts
+       set current_balance = current_balance - signed
+     where id = p_account_id;
+    if p_target_id is not null then
+      update public.accounts
+         set current_balance = current_balance + signed
+       where id = p_target_id;
+    end if;
+  end if;
+end $$;
+
+create or replace function public.tx_balance_trigger()
+returns trigger language plpgsql as $$
+begin
+  if (TG_OP = 'INSERT') then
+    if new.deleted_at is null then
+      perform public.apply_tx_to_balances(
+        new.type, new.amount, new.account_id, new.target_account_id, 1
+      );
+    end if;
+    return new;
+  elsif (TG_OP = 'DELETE') then
+    if old.deleted_at is null then
+      perform public.apply_tx_to_balances(
+        old.type, old.amount, old.account_id, old.target_account_id, -1
+      );
+    end if;
+    return old;
+  elsif (TG_OP = 'UPDATE') then
+    -- Revertir efecto anterior si estaba activa
+    if old.deleted_at is null then
+      perform public.apply_tx_to_balances(
+        old.type, old.amount, old.account_id, old.target_account_id, -1
+      );
+    end if;
+    -- Aplicar efecto nuevo si queda activa
+    if new.deleted_at is null then
+      perform public.apply_tx_to_balances(
+        new.type, new.amount, new.account_id, new.target_account_id, 1
+      );
+    end if;
+    return new;
+  end if;
+  return null;
+end $$;
+
+drop trigger if exists trg_tx_balance on public.transactions;
+create trigger trg_tx_balance
+  after insert or update or delete on public.transactions
+  for each row execute function public.tx_balance_trigger();
+
 create table if not exists public.budgets (
   id            uuid primary key default uuid_generate_v4(),
   household_id  uuid not null references public.households(id) on delete cascade,
