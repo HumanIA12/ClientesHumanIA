@@ -57,6 +57,7 @@ export interface Database {
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['households']['Insert']>
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -76,6 +77,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['profiles']['Insert']>
+        Relationships: []
       }
       accounts: {
         Row: {
@@ -113,6 +115,7 @@ export interface Database {
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['accounts']['Insert']>
+        Relationships: []
       }
       categories: {
         Row: {
@@ -138,6 +141,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['categories']['Insert']>
+        Relationships: []
       }
       transactions: {
         Row: {
@@ -183,6 +187,7 @@ export interface Database {
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['transactions']['Insert']>
+        Relationships: []
       }
       recurring_rules: {
         Row: {
@@ -228,6 +233,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['recurring_rules']['Insert']
         >
+        Relationships: []
       }
       installment_plans: {
         Row: {
@@ -265,6 +271,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['installment_plans']['Insert']
         >
+        Relationships: []
       }
       budgets: {
         Row: {
@@ -290,6 +297,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['budgets']['Insert']>
+        Relationships: []
       }
       reminders: {
         Row: {
@@ -315,6 +323,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['reminders']['Insert']>
+        Relationships: []
       }
       audit_log: {
         Row: {
@@ -338,6 +347,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['audit_log']['Insert']>
+        Relationships: []
       }
       attachments: {
         Row: {
@@ -363,15 +373,23 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['attachments']['Insert']>
+        Relationships: []
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
     Enums: {
       account_type: AccountType
       transaction_type: TransactionType
       sharing_type: Sharing
       recurrence_frequency: RecurrenceFrequency
+    }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }
