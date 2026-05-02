@@ -46,6 +46,7 @@ export interface Database {
           id: string
           name: string
           currency: string
+          safe_buffer: number
           created_at: string
           updated_at: string
         }
@@ -53,6 +54,7 @@ export interface Database {
           id?: string
           name: string
           currency?: string
+          safe_buffer?: number
           created_at?: string
           updated_at?: string
         }
@@ -380,7 +382,14 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      seed_default_categories: {
+        Args: Record<string, never>
+        Returns: number
+      }
+      materialize_due_recurrences: {
+        Args: Record<string, never>
+        Returns: number
+      }
     }
     Enums: {
       account_type: AccountType

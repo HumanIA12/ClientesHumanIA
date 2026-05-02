@@ -47,9 +47,14 @@ create table if not exists public.households (
   id          uuid primary key default uuid_generate_v4(),
   name        text not null,
   currency    text not null default 'MXN',
+  safe_buffer numeric(14,2) not null default 0,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
+
+-- Para schemas existentes:
+alter table public.households
+  add column if not exists safe_buffer numeric(14,2) not null default 0;
 
 drop trigger if exists trg_households_updated on public.households;
 create trigger trg_households_updated before update on public.households
@@ -474,13 +479,141 @@ create policy "attachments_storage_delete" on storage.objects
   );
 
 -- =====================================================================
--- SEEDS opcionales (categorías por defecto)
--- Ejecutar manualmente después de crear el household.
+-- RPC: seed de categorías por defecto en el household actual.
+-- Idempotente: respeta categorías que ya existan (no inserta duplicados
+-- por nombre + kind). Usa el household del profile del caller.
 -- =====================================================================
--- insert into public.categories (household_id, name, icon, color, kind) values
---   ('<HOUSEHOLD_ID>', 'Comida', 'utensils',  '#F4A823', 'expense'),
---   ('<HOUSEHOLD_ID>', 'Transporte', 'car',   '#2D9CDB', 'expense'),
---   ('<HOUSEHOLD_ID>', 'Hogar', 'home',       '#1E6B4A', 'expense'),
---   ('<HOUSEHOLD_ID>', 'Salud', 'heart',      '#E05A5A', 'expense'),
---   ('<HOUSEHOLD_ID>', 'Ocio',  'gamepad',    '#6C63FF', 'expense'),
---   ('<HOUSEHOLD_ID>', 'Sueldo','wallet',     '#27AE60', 'income');
+create or replace function public.seed_default_categories()
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  hh uuid := public.current_household_id();
+  inserted integer := 0;
+begin
+  if hh is null then
+    raise exception 'No household for current user';
+  end if;
+
+  insert into public.categories (household_id, name, icon, color, kind)
+  select hh, name, icon, color, kind::transaction_type
+  from (values
+    ('Comida',        'utensils',   '#F4A823', 'expense'),
+    ('Súper',         'bag',        '#1E6B4A', 'expense'),
+    ('Transporte',    'car',        '#2D9CDB', 'expense'),
+    ('Combustible',   'fuel',       '#E05A5A', 'expense'),
+    ('Hogar',         'home',       '#1E6B4A', 'expense'),
+    ('Servicios',     'bulb',       '#F4A823', 'expense'),
+    ('Internet',      'wifi',       '#2D9CDB', 'expense'),
+    ('Teléfono',      'phone',      '#6C63FF', 'expense'),
+    ('Salud',         'health',     '#E05A5A', 'expense'),
+    ('Ocio',          'gamepad',    '#6C63FF', 'expense'),
+    ('Streaming',     'tv',         '#FF6B9D', 'expense'),
+    ('Cafetería',     'coffee',     '#F4A823', 'expense'),
+    ('Ropa',          'shirt',      '#FF6B9D', 'expense'),
+    ('Educación',     'education',  '#2D9CDB', 'expense'),
+    ('Viajes',        'plane',      '#27AE60', 'expense'),
+    ('Regalos',       'gift',       '#FF6B9D', 'expense'),
+    ('Mascotas',      'pet',        '#F4A823', 'expense'),
+    ('Otros',         'package',    '#1A1A1A', 'expense'),
+    ('Sueldo',        'work',       '#27AE60', 'income'),
+    ('Freelance',     'work',       '#1E6B4A', 'income'),
+    ('Reembolsos',    'cash',       '#27AE60', 'income'),
+    ('Otros ingresos','wallet',     '#1E6B4A', 'income')
+  ) as v(name, icon, color, kind)
+  where not exists (
+    select 1 from public.categories c
+    where c.household_id = hh
+      and c.deleted_at is null
+      and lower(c.name) = lower(v.name)
+      and c.kind = v.kind::transaction_type
+  );
+
+  get diagnostics inserted = row_count;
+  return inserted;
+end $$;
+
+grant execute on function public.seed_default_categories() to authenticated;
+
+-- =====================================================================
+-- RPC: materializar recurrentes vencidas.
+-- Para cada regla activa con next_run_date <= hoy:
+--   - inserta una transaction (el trigger ajusta balances)
+--   - avanza next_run_date según frequency
+--   - si end_date pasó, desactiva la regla
+-- Devuelve el número de transacciones generadas. Idempotente por día:
+-- si se llama dos veces el mismo día, sólo aplica reglas que aún
+-- tengan next_run_date <= hoy.
+-- =====================================================================
+create or replace function public.materialize_due_recurrences()
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  hh uuid := public.current_household_id();
+  uid uuid := auth.uid();
+  r record;
+  inserted integer := 0;
+  step interval;
+begin
+  if hh is null or uid is null then
+    raise exception 'No household / user for current request';
+  end if;
+
+  for r in
+    select *
+      from public.recurring_rules
+     where household_id = hh
+       and is_active = true
+       and deleted_at is null
+       and next_run_date <= current_date
+  loop
+    -- Crear la transacción derivada (el trigger de balance se ocupa).
+    insert into public.transactions (
+      household_id, account_id, target_account_id, category_id,
+      type, amount, currency,
+      description, performed_at, performed_by, registered_by,
+      sharing, recurring_rule_id
+    ) values (
+      r.household_id, r.account_id, null, r.category_id,
+      r.type, r.amount, r.currency,
+      r.name, (r.next_run_date::timestamp at time zone 'UTC'),
+      coalesce(r.performed_by, uid), uid,
+      r.sharing, r.id
+    );
+
+    -- Avanzar next_run_date según frequency
+    step := case r.frequency
+      when 'daily'    then interval '1 day'
+      when 'weekly'   then interval '1 week'
+      when 'biweekly' then interval '2 weeks'
+      when 'monthly'  then interval '1 month'
+      when 'yearly'   then interval '1 year'
+    end;
+
+    update public.recurring_rules
+       set next_run_date = (r.next_run_date + step)::date,
+           is_active = case
+             when r.end_date is not null
+                  and (r.next_run_date + step)::date > r.end_date
+             then false
+             else is_active
+           end
+     where id = r.id;
+
+    inserted := inserted + 1;
+  end loop;
+
+  return inserted;
+end $$;
+
+grant execute on function public.materialize_due_recurrences() to authenticated;
+
+-- =====================================================================
+-- SEEDS manuales (referencia)
+-- =====================================================================
+-- select public.seed_default_categories();
