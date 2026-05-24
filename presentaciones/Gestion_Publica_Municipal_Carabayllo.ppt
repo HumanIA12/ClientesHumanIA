@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:p='urn:schemas-microsoft-com:office:powerpoint' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<meta name='ProgId' content='PowerPoint.Slide'>
+<meta name='Generator' content='ChatGPT'>
+<title>Gestión Pública Municipal en Carabayllo</title>
+<style>
+@page { size: 13.333in 7.5in; margin:0; }
+body { margin:0; padding:0; background:#e8eef8; font-family: Aptos, Calibri, Arial, sans-serif; color:#0f172a; }
+.slide { width:1280px; height:720px; page-break-after:always; position:relative; overflow:hidden; background:#f8fafc; }
+.slide::before { content:''; position:absolute; left:0; top:0; width:100%; height:100%; background:linear-gradient(135deg, rgba(15,76,129,.08), rgba(255,255,255,.0) 45%, rgba(34,197,94,.08)); z-index:0; }
+.content { position:absolute; z-index:1; left:70px; right:70px; top:58px; bottom:54px; }
+.cover { background:linear-gradient(135deg,#0f4c81 0%,#123b64 52%,#0f766e 100%); color:white; }
+.cover::before { background:radial-gradient(circle at 78% 26%, rgba(255,255,255,.18), transparent 28%), radial-gradient(circle at 8% 82%, rgba(255,255,255,.12), transparent 25%); }
+.cover .content { top:78px; }
+h1 { font-size:46px; line-height:1.05; margin:0 0 18px 0; letter-spacing:-.6px; color:#0f4c81; }
+.cover h1 { font-size:60px; color:white; max-width:900px; }
+h2 { font-size:34px; margin:0 0 24px 0; color:#0f4c81; letter-spacing:-.3px; }
+.cover h2 { color:#c7f9ee; font-size:30px; max-width:850px; font-weight:500; }
+h3 { font-size:25px; margin:0 0 10px 0; color:#0f4c81; }
+p { font-size:23px; line-height:1.32; margin:0 0 12px 0; }
+li { font-size:22px; line-height:1.28; margin:8px 0; }
+ul { margin:0; padding-left:28px; }
+.small { font-size:16px; line-height:1.25; }
+.caption { font-size:17px; color:#475569; }
+.footer { position:absolute; left:70px; right:70px; bottom:24px; font-size:14px; color:#64748b; z-index:2; border-top:1px solid #cbd5e1; padding-top:8px; }
+.cover .footer { color:#dbeafe; border-color:rgba(255,255,255,.28); }
+.kicker { display:inline-block; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#0f766e; margin-bottom:12px; }
+.cover .kicker { color:#a7f3d0; }
+.badge { display:inline-block; border-radius:999px; padding:8px 16px; background:#e0f2fe; color:#0f4c81; font-weight:700; font-size:18px; margin:4px 6px 4px 0; }
+.cover .badge { background:rgba(255,255,255,.14); color:white; border:1px solid rgba(255,255,255,.25); }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+.grid4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; }
+.card { background:white; border-radius:18px; padding:22px 24px; box-shadow:0 10px 28px rgba(15,23,42,.08); border:1px solid #e2e8f0; }
+.card.dark { background:#0f4c81; color:white; border:none; }
+.card.dark h3 { color:white; }
+.card.green { background:#ecfdf5; border-color:#a7f3d0; }
+.card.blue { background:#eff6ff; border-color:#bfdbfe; }
+.card.amber { background:#fffbeb; border-color:#fde68a; }
+.num { font-size:48px; font-weight:800; color:#0f4c81; line-height:1; }
+.metric { font-size:42px; font-weight:800; color:#0f4c81; margin-bottom:6px; }
+.metriclabel { font-size:18px; color:#334155; line-height:1.22; }
+.flow { display:flex; align-items:center; gap:10px; margin-top:28px; }
+.step { flex:1; background:white; border:2px solid #dbeafe; border-radius:16px; padding:14px 12px; text-align:center; font-size:19px; font-weight:700; color:#123b64; min-height:70px; display:flex; align-items:center; justify-content:center; }
+.arrow { font-size:32px; color:#0f766e; font-weight:800; }
+.table { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; overflow:hidden; border-radius:16px; box-shadow:0 8px 24px rgba(15,23,42,.08); }
+.table th { background:#0f4c81; color:white; text-align:left; padding:13px 15px; font-size:18px; }
+.table td { background:white; padding:12px 15px; border-bottom:1px solid #e2e8f0; vertical-align:top; }
+.table tr:last-child td { border-bottom:none; }
+.table.alt th { background:#0f766e; }
+.pillrow { margin-top:14px; }
+.quote { font-size:32px; line-height:1.2; font-weight:700; color:#0f4c81; border-left:8px solid #0f766e; padding:18px 24px; background:white; border-radius:12px; box-shadow:0 10px 25px rgba(15,23,42,.07); }
+.icon { font-size:34px; margin-bottom:8px; }
+.section { background:linear-gradient(135deg,#0f4c81,#0f766e); color:white; }
+.section h1, .section h2, .section h3 { color:white; }
+.section .quote { color:white; background:rgba(255,255,255,.12); border-left-color:#a7f3d0; box-shadow:none; }
+.matrix td { font-size:17px; }
+.matrix th { font-size:17px; }
+.mini { font-size:17px; }
+.bigword { font-size:78px; font-weight:900; letter-spacing:-2px; color:#0f4c81; }
+.cover .bigword { color:white; }
+</style>
+</head>
+<body>
+
+<div class='slide cover'>
+  <div class='content'>
+    <div class='kicker'>Clase de formación política y municipal</div>
+    <h1>Gestión Pública Municipal en Carabayllo</h1>
+    <h2>Elementos, fases, competencias y aplicación a las necesidades reales del distrito</h2>
+    <div class='pillrow'>
+      <span class='badge'>Gestión pública</span>
+      <span class='badge'>Derecho municipal</span>
+      <span class='badge'>Plan de gobierno</span>
+      <span class='badge'>Carabayllo</span>
+    </div>
+    <div style='position:absolute; left:70px; bottom:105px; max-width:940px;'>
+      <div class='quote' style='font-size:30px;'>Gobernar es convertir necesidades reales en decisiones legales, presupuesto, servicios y resultados.</div>
+    </div>
+  </div>
+  <div class='footer'>Material de clase elaborado para capacitación municipal y campaña política local.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Objetivo</span>
+    <h1>¿Para qué sirve esta clase?</h1>
+    <div class='grid2'>
+      <div class='card blue'>
+        <h3>Objetivo general</h3>
+        <p>Comprender qué es la gestión pública municipal y cómo se aplica a los problemas concretos de Carabayllo.</p>
+      </div>
+      <div class='card green'>
+        <h3>Resultado esperado</h3>
+        <p>Que cada propuesta política tenga necesidad real, competencia legal, presupuesto, responsable e indicador.</p>
+      </div>
+    </div>
+    <div class='grid4' style='margin-top:24px;'>
+      <div class='card'><div class='num'>1</div><p>Definir gestión pública.</p></div>
+      <div class='card'><div class='num'>2</div><p>Explicar elementos y fases.</p></div>
+      <div class='card'><div class='num'>3</div><p>Relacionar con competencias municipales.</p></div>
+      <div class='card'><div class='num'>4</div><p>Aplicar a necesidades de Carabayllo.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Idea guía: de la teoría a la acción municipal.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Mapa de aprendizaje</span>
+    <h1>La lógica completa de una gestión municipal</h1>
+    <div class='flow'>
+      <div class='step'>Necesidad del vecino</div><div class='arrow'>→</div>
+      <div class='step'>Competencia legal</div><div class='arrow'>→</div>
+      <div class='step'>Plan</div><div class='arrow'>→</div>
+      <div class='step'>Presupuesto</div><div class='arrow'>→</div>
+      <div class='step'>Servicio u obra</div><div class='arrow'>→</div>
+      <div class='step'>Resultado</div>
+    </div>
+    <div class='grid3' style='margin-top:36px;'>
+      <div class='card'><h3>Política</h3><p>Define prioridades y genera confianza ciudadana.</p></div>
+      <div class='card'><h3>Legalidad</h3><p>Evita prometer lo que la municipalidad no puede ejecutar sola.</p></div>
+      <div class='card'><h3>Gestión</h3><p>Convierte la promesa en servicio medible.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Fórmula base para analizar cualquier propuesta municipal.</div>
+</div>
+
+<div class='slide section'>
+  <div class='content'>
+    <span class='kicker'>Concepto central</span>
+    <h1>¿Qué es la gestión pública?</h1>
+    <div class='quote'>La gestión pública es la forma en que el Estado organiza normas, recursos, personas, presupuesto y decisiones para atender necesidades de la población.</div>
+    <div class='grid2' style='margin-top:32px;'>
+      <div class='card' style='background:rgba(255,255,255,.13); color:white; border:none; box-shadow:none;'>
+        <h3>En una municipalidad</h3>
+        <p>Significa convertir la autoridad municipal en seguridad, limpieza, orden urbano, programas sociales, obras, fiscalización y atención al vecino.</p>
+      </div>
+      <div class='card' style='background:rgba(255,255,255,.13); color:white; border:none; box-shadow:none;'>
+        <h3>En Carabayllo</h3>
+        <p>Significa atender necesidades distintas por zonas: urbanas, rurales, laderas, mercados, vías principales y sectores vulnerables.</p>
+      </div>
+    </div>
+  </div>
+  <div class='footer'>Gestión pública = pasar de la promesa al servicio.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Base legal</span>
+    <h1>¿Qué dice la Ley Orgánica de Municipalidades?</h1>
+    <div class='grid2'>
+      <div class='card blue'>
+        <h3>Elementos del gobierno local</h3>
+        <p>Territorio, población y organización.</p>
+        <p class='caption'>Estos elementos permiten entender a quién se gobierna, dónde se gobierna y con qué estructura institucional.</p>
+      </div>
+      <div class='card green'>
+        <h3>Finalidad municipal</h3>
+        <p>Representar al vecindario, prestar servicios públicos locales y promover el desarrollo integral, sostenible y armónico.</p>
+      </div>
+    </div>
+    <div class='quote' style='margin-top:28px; font-size:28px;'>La municipalidad no debe actuar por impulso: debe actuar dentro de sus competencias, con planificación y rendición de cuentas.</div>
+  </div>
+  <div class='footer'>Fuente: Ley N.° 27972, Ley Orgánica de Municipalidades.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Elementos</span>
+    <h1>Elementos de la gestión pública municipal</h1>
+    <div class='grid3'>
+      <div class='card'><h3>1. Necesidad pública</h3><p>Problema real que afecta al vecino.</p></div>
+      <div class='card'><h3>2. Competencia legal</h3><p>Qué puede hacer la municipalidad.</p></div>
+      <div class='card'><h3>3. Planeamiento</h3><p>Qué se hará primero y por qué.</p></div>
+      <div class='card'><h3>4. Presupuesto</h3><p>Con qué recursos se ejecutará.</p></div>
+      <div class='card'><h3>5. Organización</h3><p>Quién será responsable de ejecutar.</p></div>
+      <div class='card'><h3>6. Control</h3><p>Cómo se fiscaliza, evalúa y rinde cuentas.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Cada elemento debe conectarse con una necesidad concreta de Carabayllo.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Fases</span>
+    <h1>Fases de la gestión pública</h1>
+    <table class='table'>
+      <tr><th>Fase</th><th>Pregunta clave</th><th>Aplicación en Carabayllo</th></tr>
+      <tr><td><b>1. Diagnóstico</b></td><td>¿Qué problema existe y dónde?</td><td>Mapa de inseguridad, basura, vías, mercados y zonas de riesgo.</td></tr>
+      <tr><td><b>2. Planeamiento</b></td><td>¿Qué haremos primero?</td><td>Priorizar seguridad, limpieza, catastro, mercados y programas sociales.</td></tr>
+      <tr><td><b>3. Presupuesto</b></td><td>¿Con qué recursos?</td><td>PIA, PIM, PMI, PAC y presupuesto participativo.</td></tr>
+      <tr><td><b>4. Ejecución</b></td><td>¿Cómo se hace realidad?</td><td>Serenazgo, limpieza, obras, fiscalización y atención vecinal.</td></tr>
+      <tr><td><b>5. Evaluación</b></td><td>¿Funcionó?</td><td>Indicadores, tablero de control y rendición pública.</td></tr>
+    </table>
+  </div>
+  <div class='footer'>Secuencia mínima: diagnosticar → planificar → presupuestar → ejecutar → evaluar.</div>
+</div>
+
+<div class='slide section'>
+  <div class='content'>
+    <span class='kicker'>Territorio</span>
+    <h1>Carabayllo no es un distrito homogéneo</h1>
+    <div class='grid3' style='margin-top:34px;'>
+      <div class='card' style='background:rgba(255,255,255,.14); color:white; border:none; box-shadow:none;'><div class='metric' style='color:white;'>424 km²</div><div class='metriclabel' style='color:#e0f2fe;'>Extensión territorial señalada en el diagnóstico de brechas.</div></div>
+      <div class='card' style='background:rgba(255,255,255,.14); color:white; border:none; box-shadow:none;'><div class='metric' style='color:white;'>12.34%</div><div class='metriclabel' style='color:#e0f2fe;'>Del territorio de Lima Metropolitana según el diagnóstico municipal.</div></div>
+      <div class='card' style='background:rgba(255,255,255,.14); color:white; border:none; box-shadow:none;'><div class='metric' style='color:white;'>333,045</div><div class='metriclabel' style='color:#e0f2fe;'>Habitantes censados según Censo 2017 citado por el diagnóstico.</div></div>
+    </div>
+    <div class='quote' style='margin-top:34px;'>Una sola receta no sirve para todo Carabayllo: la gestión debe organizarse por zonas, brechas y población afectada.</div>
+  </div>
+  <div class='footer'>Fuente: Diagnóstico de brechas de la Municipalidad Distrital de Carabayllo.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Diagnóstico</span>
+    <h1>Necesidades urgentes de Carabayllo</h1>
+    <div class='grid4'>
+      <div class='card amber'><div class='metric'>80%</div><div class='metriclabel'>Sectores sin medios de vigilancia.</div></div>
+      <div class='card amber'><div class='metric'>83.3%</div><div class='metriclabel'>Sectores sin vigilancia adecuada.</div></div>
+      <div class='card amber'><div class='metric'>89.29%</div><div class='metriclabel'>Mercados minoristas en condiciones inadecuadas.</div></div>
+      <div class='card amber'><div class='metric'>100%</div><div class='metriclabel'>Brecha en predios urbanos sin catastro.</div></div>
+    </div>
+    <div class='grid2' style='margin-top:24px;'>
+      <div class='card'><h3>Problemas visibles</h3><p>Inseguridad, basura, vías deterioradas, mercados desordenados, falta de áreas verdes, comercio informal y zonas de riesgo.</p></div>
+      <div class='card'><h3>Problema de fondo</h3><p>La gestión debe pasar de acciones aisladas a un sistema: información, presupuesto, responsables y resultados.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Fuente: Diagnóstico de brechas de infraestructura o acceso a servicios de Carabayllo.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Fórmula de gobierno</span>
+    <h1>Cómo relacionar necesidad, competencia y gestión</h1>
+    <div class='flow' style='margin-top:18px;'>
+      <div class='step'>Necesidad</div><div class='arrow'>→</div>
+      <div class='step'>Competencia</div><div class='arrow'>→</div>
+      <div class='step'>Instrumento</div><div class='arrow'>→</div>
+      <div class='step'>Responsable</div><div class='arrow'>→</div>
+      <div class='step'>Acción</div><div class='arrow'>→</div>
+      <div class='step'>Indicador</div>
+    </div>
+    <div class='card blue' style='margin-top:34px;'>
+      <h3>Ejemplo rápido: inseguridad</h3>
+      <p>Necesidad: robos y extorsión → Competencia: serenazgo y coordinación con PNP → Instrumento: plan de seguridad → Responsable: Gerencia de Seguridad Ciudadana → Acción: patrullaje por cuadrantes → Indicador: incidencias atendidas y zonas recuperadas.</p>
+    </div>
+  </div>
+  <div class='footer'>Esta fórmula debe aplicarse a cada promesa de campaña y a cada programa municipal.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Competencias</span>
+    <h1>¿Qué puede hacer una municipalidad distrital?</h1>
+    <div class='grid3'>
+      <div class='card'><h3>Orden territorial</h3><p>Uso del suelo, catastro, habilitación urbana, control de obras y saneamiento físico-legal.</p></div>
+      <div class='card'><h3>Servicios públicos</h3><p>Limpieza pública, áreas verdes, salubridad, mantenimiento y atención ciudadana.</p></div>
+      <div class='card'><h3>Seguridad ciudadana</h3><p>Serenazgo, prevención, patrullaje integrado y coordinación con PNP.</p></div>
+      <div class='card'><h3>Desarrollo social</h3><p>DEMUNA, OMAPED, adulto mayor, Vaso de Leche, población vulnerable.</p></div>
+      <div class='card'><h3>Economía local</h3><p>Licencias, mercados, comercio ambulatorio, MYPE, turismo y emprendimiento.</p></div>
+      <div class='card'><h3>Riesgo y ambiente</h3><p>Gestión del riesgo, defensa civil, educación ambiental y fiscalización.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Fuente legal: Ley N.° 27972, Ley Orgánica de Municipalidades.</div>
+</div>
+
+<div class='slide section'>
+  <div class='content'>
+    <span class='kicker'>Aplicación 1</span>
+    <h1>Seguridad ciudadana</h1>
+    <div class='grid2'>
+      <div class='card' style='background:white; color:#0f172a;'>
+        <h3>Necesidad</h3>
+        <ul><li>Robos, extorsión y miedo vecinal.</li><li>Falta de cámaras y vigilancia suficiente.</li><li>Espacios públicos inseguros.</li></ul>
+      </div>
+      <div class='card' style='background:white; color:#0f172a;'>
+        <h3>Gestión municipal</h3>
+        <ul><li>Mapa del delito por sectores.</li><li>Serenazgo por cuadrantes.</li><li>Patrullaje integrado con PNP.</li><li>Cámaras, iluminación y juntas vecinales.</li></ul>
+      </div>
+    </div>
+    <div class='quote' style='margin-top:28px;'>Indicadores: incidencias atendidas, patrullajes ejecutados, cámaras operativas y puntos críticos recuperados.</div>
+  </div>
+  <div class='footer'>Competencia: seguridad ciudadana, serenazgo, prevención y coordinación interinstitucional.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Aplicación 2</span>
+    <h1>Limpieza pública, ambiente y áreas verdes</h1>
+    <div class='grid2'>
+      <div class='card amber'>
+        <h3>Necesidad</h3>
+        <p>Basura acumulada, puntos críticos, contaminación, parques deteriorados y baja cultura ambiental.</p>
+      </div>
+      <div class='card green'>
+        <h3>Competencia municipal</h3>
+        <p>Proveer limpieza pública, regular salubridad, fiscalizar contaminantes y mejorar espacios públicos.</p>
+      </div>
+    </div>
+    <table class='table alt' style='margin-top:24px;'>
+      <tr><th>Acción</th><th>Cómo se aplica en Carabayllo</th><th>Indicador</th></tr>
+      <tr><td>Rutas de recojo</td><td>Horarios públicos, GPS y control diario.</td><td>Rutas cumplidas.</td></tr>
+      <tr><td>Puntos críticos</td><td>Retiro, vigilancia y sanción.</td><td>Puntos eliminados.</td></tr>
+      <tr><td>Áreas verdes</td><td>Recuperación de parques y arborización.</td><td>m² recuperados.</td></tr>
+    </table>
+  </div>
+  <div class='footer'>La limpieza visible genera confianza inmediata en la gestión.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Aplicación 3</span>
+    <h1>Desarrollo urbano y catastro</h1>
+    <div class='grid2'>
+      <div>
+        <div class='bigword'>Catastro</div>
+        <p style='font-size:28px; color:#334155;'>Sin información territorial no hay orden, recaudación justa ni planificación de obras.</p>
+      </div>
+      <div class='card blue'>
+        <h3>Acciones prioritarias</h3>
+        <ul><li>Catastro digital por sectores.</li><li>Control de obras sin licencia.</li><li>Ordenamiento de expansión urbana.</li><li>Identificación de zonas de riesgo.</li><li>Trámites transparentes y trazables.</li></ul>
+      </div>
+    </div>
+    <div class='quote' style='margin-top:28px; font-size:28px;'>Carabayllo necesita pasar del crecimiento por presión social al crecimiento con planificación urbana.</div>
+  </div>
+  <div class='footer'>Competencia: uso del suelo, catastro, habilitación urbana, fiscalización y desarrollo urbano-rural.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Aplicación 4</span>
+    <h1>Mercados, comercio y desarrollo económico local</h1>
+    <div class='grid2'>
+      <div class='card amber'>
+        <h3>Problema</h3>
+        <p>Mercados con infraestructura inadecuada, salubridad deficiente, informalidad, inseguridad y trámites lentos para pequeños negocios.</p>
+      </div>
+      <div class='card green'>
+        <h3>Finalidad</h3>
+        <p>Ordenar sin destruir la economía popular: formalizar, fiscalizar, capacitar y mejorar condiciones de seguridad y salubridad.</p>
+      </div>
+    </div>
+    <div class='grid4' style='margin-top:24px;'>
+      <div class='card'><h3>Empadronar</h3><p class='mini'>Saber quiénes trabajan y dónde.</p></div>
+      <div class='card'><h3>Fiscalizar</h3><p class='mini'>Salubridad, seguridad y licencias.</p></div>
+      <div class='card'><h3>Formalizar</h3><p class='mini'>Trámites simples y reglas claras.</p></div>
+      <div class='card'><h3>Promover</h3><p class='mini'>MYPE, empleo joven y turismo.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Indicadores: mercados fiscalizados, negocios formalizados, licencias emitidas y MYPE capacitadas.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Aplicación 5</span>
+    <h1>Programas sociales y salud preventiva</h1>
+    <table class='table'>
+      <tr><th>Necesidad</th><th>Competencia o función municipal</th><th>Aplicación en Carabayllo</th></tr>
+      <tr><td>Niñez y adolescencia en riesgo</td><td>DEMUNA y protección de derechos.</td><td>Atención oportuna, expedientes y articulación con instituciones.</td></tr>
+      <tr><td>Personas con discapacidad</td><td>OMAPED y accesibilidad.</td><td>Registro, orientación y servicios municipales inclusivos.</td></tr>
+      <tr><td>Adulto mayor</td><td>CIAM y programas sociales.</td><td>Actividades, atención y acompañamiento.</td></tr>
+      <tr><td>Salud preventiva</td><td>Coordinación con MINSA/DIRIS.</td><td>Campañas de anemia, vacunación, salud mental y salubridad.</td></tr>
+    </table>
+    <div class='quote' style='margin-top:24px; font-size:26px;'>La gestión social debe empezar con padrones reales y focalización: ayudar primero a quien más lo necesita.</div>
+  </div>
+  <div class='footer'>La protección social debe medirse por beneficiarios atendidos y casos resueltos.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Aplicación 6</span>
+    <h1>Riesgo de desastres, vías y transporte</h1>
+    <div class='grid3'>
+      <div class='card amber'><h3>Riesgo</h3><ul><li>Quebradas.</li><li>Laderas.</li><li>Riberas del río Chillón.</li><li>Viviendas vulnerables.</li></ul></div>
+      <div class='card blue'><h3>Vías</h3><ul><li>Calles sin mantenimiento.</li><li>Accesos a colegios.</li><li>Rutas hacia mercados.</li><li>Conectividad en zonas altas.</li></ul></div>
+      <div class='card green'><h3>Transporte</h3><ul><li>Ordenamiento de mototaxis.</li><li>Señalización.</li><li>Educación vial.</li><li>Coordinación con MML y ATU.</li></ul></div>
+    </div>
+    <div class='quote' style='margin-top:28px; font-size:27px;'>Obra útil es la que reduce riesgo, conecta servicios y mejora la vida diaria del vecino.</div>
+  </div>
+  <div class='footer'>Priorizar por impacto social, seguridad y acceso a servicios esenciales.</div>
+</div>
+
+<div class='slide section'>
+  <div class='content'>
+    <span class='kicker'>Herramientas</span>
+    <h1>Instrumentos de gestión municipal</h1>
+    <div class='grid3'>
+      <div class='card'><h3>PDLC</h3><p>Visión de desarrollo local concertado.</p></div>
+      <div class='card'><h3>PEI</h3><p>Objetivos estratégicos institucionales.</p></div>
+      <div class='card'><h3>POI</h3><p>Actividades anuales y metas operativas.</p></div>
+      <div class='card'><h3>PIA / PIM</h3><p>Presupuesto inicial y modificado.</p></div>
+      <div class='card'><h3>PMI</h3><p>Cartera de inversiones.</p></div>
+      <div class='card'><h3>ROF / TUPA / PAC</h3><p>Organización, trámites y contrataciones.</p></div>
+    </div>
+  </div>
+  <div class='footer'>Un plan de gobierno serio debe dialogar con estos instrumentos.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>PEI 2025-2030</span>
+    <h1>Objetivos institucionales vinculados a Carabayllo</h1>
+    <table class='table matrix'>
+      <tr><th>Objetivo del PEI</th><th>Necesidad ciudadana</th><th>Unidad responsable referencial</th></tr>
+      <tr><td>Protección social</td><td>Población vulnerable, mujer, niñez, adulto mayor y discapacidad.</td><td>Desarrollo Humano y Social.</td></tr>
+      <tr><td>Desarrollo territorial ordenado</td><td>Catastro, formalización, control urbano y zonas de riesgo.</td><td>Desarrollo Urbano y Rural.</td></tr>
+      <tr><td>Seguridad ciudadana</td><td>Patrullaje, prevención y respuesta municipal.</td><td>Seguridad Ciudadana y Vial.</td></tr>
+      <tr><td>Gestión ambiental</td><td>Residuos, reciclaje, parques y fiscalización ambiental.</td><td>Medio Ambiente.</td></tr>
+      <tr><td>Transporte y tránsito</td><td>Vías, señalización, ordenamiento y movilidad.</td><td>Transporte.</td></tr>
+    </table>
+  </div>
+  <div class='footer'>Fuente: PEI 2025-2030 de la Municipalidad Distrital de Carabayllo.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Presupuesto</span>
+    <h1>Priorizar: no todo se puede hacer al mismo tiempo</h1>
+    <div class='grid2'>
+      <div class='card dark'>
+        <h3>PIA 2026</h3>
+        <div class='metric' style='color:white;'>S/ 148,417,544</div>
+        <p>Presupuesto institucional de apertura promulgado por Resolución de Alcaldía N.° 075-2025/MDC.</p>
+      </div>
+      <div class='card'>
+        <h3>Criterios para priorizar</h3>
+        <ul><li>Urgencia social.</li><li>Competencia municipal.</li><li>Impacto en población.</li><li>Viabilidad legal y técnica.</li><li>Costo y fuente de financiamiento.</li><li>Tiempo de ejecución.</li></ul>
+      </div>
+    </div>
+    <div class='quote' style='margin-top:28px; font-size:28px;'>Una promesa sin presupuesto es propaganda; una propuesta con presupuesto, responsable e indicador es gestión.</div>
+  </div>
+  <div class='footer'>Fuente: Plataforma del Estado Peruano, Resolución de Alcaldía N.° 075-2025/MDC.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Estructura municipal</span>
+    <h1>Rol del alcalde, regidores y gerencias</h1>
+    <table class='table alt'>
+      <tr><th>Actor</th><th>Rol principal</th><th>Aplicación en Carabayllo</th></tr>
+      <tr><td><b>Alcalde</b></td><td>Lidera la visión y la acción ejecutiva.</td><td>Define prioridades: seguridad, limpieza, orden, servicios y transparencia.</td></tr>
+      <tr><td><b>Regidores</b></td><td>Fiscalizan, proponen ordenanzas y representan al vecino.</td><td>Controlan avances, escuchan sectores y vigilan legalidad.</td></tr>
+      <tr><td><b>Gerencia Municipal</b></td><td>Convierte decisión política en acción administrativa.</td><td>Coordina gerencias, metas, presupuesto y ejecución.</td></tr>
+      <tr><td><b>Gerencias</b></td><td>Ejecutan servicios, obras, fiscalización y programas.</td><td>Cada gerencia debe tener metas e indicadores trimestrales.</td></tr>
+      <tr><td><b>Vecinos organizados</b></td><td>Participan, vigilan y priorizan.</td><td>Juntas vecinales, cabildos, presupuesto participativo y rendición.</td></tr>
+    </table>
+  </div>
+  <div class='footer'>El regidor no es adorno: representa, fiscaliza y propone.</div>
+</div>
+
+<div class='slide section'>
+  <div class='content'>
+    <span class='kicker'>Inicio de gestión</span>
+    <h1>¿Cómo empezar una gestión municipal en Carabayllo?</h1>
+    <div class='grid4'>
+      <div class='card'><div class='num'>1</div><h3>Auditar</h3><p>Presupuesto, contratos, personal, maquinaria, obras y deudas.</p></div>
+      <div class='card'><div class='num'>2</div><h3>Mapear</h3><p>Problemas por zonas: seguridad, basura, mercados, vías y riesgo.</p></div>
+      <div class='card'><div class='num'>3</div><h3>Priorizar</h3><p>Acciones de alto impacto y competencia municipal directa.</p></div>
+      <div class='card'><div class='num'>4</div><h3>Rendir cuentas</h3><p>Tablero público y audiencias por sectores.</p></div>
+    </div>
+    <div class='quote' style='margin-top:34px;'>Los primeros 100 días deben demostrar orden, presencia municipal y capacidad de respuesta.</div>
+  </div>
+  <div class='footer'>Foco inicial: seguridad, limpieza, atención vecinal y control de puntos críticos.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Campaña política</span>
+    <h1>Cómo convertir esta clase en mensaje político</h1>
+    <div class='grid2'>
+      <div class='card blue'>
+        <h3>Mensaje a la población</h3>
+        <p>No venimos a prometer por prometer. Venimos a gestionar con legalidad, planificación, presupuesto y resultados.</p>
+      </div>
+      <div class='card green'>
+        <h3>Mensaje al equipo</h3>
+        <p>Cada propuesta debe tener necesidad real, competencia municipal, responsable, presupuesto, plazo e indicador.</p>
+      </div>
+    </div>
+    <div class='quote' style='margin-top:30px;'>Carabayllo necesita seguridad, orden, limpieza, servicios y una municipalidad que rinda cuentas.</div>
+  </div>
+  <div class='footer'>La campaña debe vender esperanza con seriedad técnica y legal.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Dinámica de clase</span>
+    <h1>Trabajo grupal: aplicar la fórmula</h1>
+    <div class='grid2'>
+      <div class='card'>
+        <h3>Elegir un problema</h3>
+        <ul><li>Seguridad.</li><li>Basura.</li><li>Mercados.</li><li>Catastro.</li><li>Riesgo de desastres.</li><li>Programas sociales.</li><li>Transporte y vías.</li></ul>
+      </div>
+      <div class='card'>
+        <h3>Responder seis preguntas</h3>
+        <ol style='font-size:21px; line-height:1.35; margin-top:0;'>
+          <li>¿Cuál es la necesidad?</li>
+          <li>¿Qué competencia municipal corresponde?</li>
+          <li>¿Qué fase va primero?</li>
+          <li>¿Qué gerencia interviene?</li>
+          <li>¿Qué acción concreta se propone?</li>
+          <li>¿Qué indicador medirá el resultado?</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class='footer'>Actividad diseñada para convertir teoría en plan municipal.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Plantilla práctica</span>
+    <h1>Matriz para evaluar una propuesta municipal</h1>
+    <table class='table matrix'>
+      <tr><th>Campo</th><th>Pregunta</th><th>Ejemplo en Carabayllo</th></tr>
+      <tr><td>Necesidad</td><td>¿Qué problema real se atiende?</td><td>Robos en sectores con poca vigilancia.</td></tr>
+      <tr><td>Competencia</td><td>¿La municipalidad puede intervenir?</td><td>Serenazgo, prevención, iluminación, coordinación PNP.</td></tr>
+      <tr><td>Instrumento</td><td>¿En qué plan se incorpora?</td><td>Plan de seguridad, PEI, POI y presupuesto.</td></tr>
+      <tr><td>Presupuesto</td><td>¿Con qué fuente se financia?</td><td>PIA/PIM, inversiones, mantenimiento o cooperación.</td></tr>
+      <tr><td>Responsable</td><td>¿Quién ejecuta y quién fiscaliza?</td><td>Gerencia de Seguridad y regidores fiscalizadores.</td></tr>
+      <tr><td>Indicador</td><td>¿Cómo se demuestra resultado?</td><td>Patrullajes, incidencias atendidas y zonas recuperadas.</td></tr>
+    </table>
+  </div>
+  <div class='footer'>Esta matriz puede usarse para plan de gobierno, campaña y gestión.</div>
+</div>
+
+<div class='slide section'>
+  <div class='content'>
+    <span class='kicker'>Cierre</span>
+    <h1>Conclusión de la clase</h1>
+    <div class='flow' style='margin-top:28px;'>
+      <div class='step'>Diagnosticar</div><div class='arrow'>→</div>
+      <div class='step'>Planificar</div><div class='arrow'>→</div>
+      <div class='step'>Presupuestar</div><div class='arrow'>→</div>
+      <div class='step'>Ejecutar</div><div class='arrow'>→</div>
+      <div class='step'>Fiscalizar</div><div class='arrow'>→</div>
+      <div class='step'>Evaluar</div>
+    </div>
+    <div class='quote' style='margin-top:42px;'>En Carabayllo, cada promesa debe tener necesidad real, competencia legal, presupuesto, responsable e indicador. Esa es la diferencia entre improvisar y gobernar.</div>
+  </div>
+  <div class='footer'>Mensaje final para clase, campaña y gobierno municipal.</div>
+</div>
+
+<div class='slide'>
+  <div class='content'>
+    <span class='kicker'>Fuentes principales</span>
+    <h1>Documentos base utilizados</h1>
+    <div class='card' style='height:480px;'>
+      <ul>
+        <li>Ley N.° 27972, Ley Orgánica de Municipalidades. MEF: https://www.mef.gob.pe/contenidos/presu_publ/capacita/programacion_formulacion_presupuestal2012/Anexos/ley27972.pdf</li>
+        <li>Municipalidad Distrital de Carabayllo. Plan Estratégico Institucional PEI 2025-2030: https://web.municarabayllo.gob.pe/pte/PEI-2025-2030.pdf</li>
+        <li>Municipalidad Distrital de Carabayllo. Diagnóstico de brechas de infraestructura o acceso a servicios: https://web.municarabayllo.gob.pe/pte/diagnostico-brechas.pdf</li>
+        <li>Resolución de Alcaldía N.° 075-2025/MDC, PIA 2026: https://www.gob.pe/institucion/municarabayllo/normas-legales/7598332-075-2025-mdc</li>
+        <li>CEPLAN. Guía para el Planeamiento Institucional actualizada 2024: https://www.gob.pe/institucion/ceplan/informes-publicaciones/5661161-guia-para-el-planeamiento-institucional-actualizada-2024</li>
+      </ul>
+    </div>
+  </div>
+  <div class='footer'>Material elaborado como presentación formativa. Revise siempre la versión vigente de cada documento.</div>
+</div>
+
+</body>
+</html>
