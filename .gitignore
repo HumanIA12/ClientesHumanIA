@@ -1,0 +1,4 @@
+maze_cart
+maze_cart.o
+*.o
+*.a
