@@ -1,0 +1,12 @@
+{
+  "name": "presentacion-tesis-julio-llanos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "node generate.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}
