@@ -1,0 +1,9 @@
+{
+  "name": "jj-stirpe-presentation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Temporary generator for an academic PowerPoint presentation",
+  "dependencies": {
+    "pptxgenjs": "latest"
+  }
+}
